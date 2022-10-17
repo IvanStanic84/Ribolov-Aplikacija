@@ -5,6 +5,7 @@
 package edunova.view;
 
 import com.github.lgooddatepicker.components.DatePickerSettings;
+import com.github.lgooddatepicker.components.DateTimePicker;
 import edunova.controller.ObradaNatjecanje;
 import edunova.controller.ObradaRiboloviste;
 import edunova.model.Natjecanje;
@@ -16,6 +17,7 @@ import edunova.util.RibolovException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import javax.swing.JOptionPane;
 import java.util.Date;
@@ -61,11 +63,11 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
 
     private void prilagodiDatePicker() {
         DatePickerSettings dps
-                = new DatePickerSettings(/*new Locale("hr", "HR")*/);
+                = new DatePickerSettings(new Locale("hr", "HR"));
         dps.setFormatForDatesCommonEra(Pomocno.FORMAT_DATUMA);
         dps.setTranslationClear("Očisti");
         dps.setTranslationToday("Danas");
-        //dtpPocetak.setSettings(dps);
+        dtpPocetak.setDateTimeStrict(LocalDateTime.of(LocalDate.MAX, LocalTime.MIN));
     }
 
     private void ucitajRibolovista() {
@@ -80,12 +82,12 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
     private void popuniView() {
         var s = obrada.getEntitet();
         txtVrsta.setText(s.getVrsta());
-  /*      Date input = s.getPocetak();
+        Date input = s.getPocetak();
         LocalDate date = input.toInstant()
                 .atZone(ZoneId.systemDefault()).toLocalDate();
-        dtpPocetak.setDateTimePermissive(LocalDateTime.MIN);
-        dtpZavrsetak.setDateTimePermissive(LocalDateTime.MIN);
-*/
+        dtpPocetak.setDateTimePermissive(LocalDateTime.of(date, LocalTime.MIN));
+        dtpZavrsetak.setDateTimePermissive(LocalDateTime.of(date, LocalTime.NOON));
+
         cmbRiboloviste.setSelectedItem(s.getRiboloviste());
 
     }
@@ -94,16 +96,12 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
 
         var s = obrada.getEntitet();
         s.setVrsta(txtVrsta.getText());
-   /*     s.setPocetak(dtpPocetak.getDatePicker()!= null
+        s.setPocetak("17_listopada_2022_0900");
+       /* s.setPocetak(dtpPocetak.getDatePicker() != null
                 ? Date.from(Instant.MIN)
-                        
-                 : null
+                : null
         );
-         s.setPocetak(dtpZavrsetak.getDatePicker()!= null
-                ? Date.from(Instant.MIN)
-                        
-                 : null
-        );
+       
 */
         s.setRiboloviste((Riboloviste) cmbRiboloviste.getSelectedItem());
 

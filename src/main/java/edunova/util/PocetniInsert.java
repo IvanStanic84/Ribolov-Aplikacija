@@ -278,7 +278,7 @@ public class PocetniInsert {
     private Natjecanje natjecanje1() {
         Natjecanje n = new Natjecanje();
         n.setVrsta("Županijska liga");
-        n.setPocetak(new Date());
+        n.setPocetak("17. listopada 2022. 09:00");
         n.setKraj(new Date());
         n.setRiboloviste(ribolovista.get(0));
         sess.persist(n);
@@ -288,7 +288,7 @@ public class PocetniInsert {
     private Natjecanje natjecanje2() {
         Natjecanje n = new Natjecanje();
         n.setVrsta("Županijski kup");
-        n.setPocetak(new Date());
+        n.setPocetak("18. listopada 2022. 09:00");
         n.setKraj(new Date());
         n.setRiboloviste(ribolovista.get(1));
         sess.persist(n);
