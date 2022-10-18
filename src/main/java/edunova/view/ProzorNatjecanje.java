@@ -14,6 +14,7 @@ import edunova.model.Ribolovnodrustvo;
 import edunova.util.Pomocno;
 import javax.swing.DefaultComboBoxModel;
 import edunova.util.RibolovException;
+import java.sql.Time;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -85,13 +86,24 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
     private void popuniView() {
         var s = obrada.getEntitet();
         txtVrsta.setText(s.getVrsta());
+        cmbRiboloviste.setSelectedItem(s.getRiboloviste());
         Date input = s.getPocetak();
+       
         LocalDate date = input.toInstant()
                 .atZone(ZoneId.systemDefault()).toLocalDate();
-        dtpPocetak.setDateTimePermissive(LocalDateTime.of(date, LocalTime.MIN));
-        dtpZavrsetak.setDateTimePermissive(LocalDateTime.of(date, LocalTime.NOON));
+        LocalTime time = input.toInstant()
+                .atZone(ZoneId.systemDefault()).toLocalTime();
+        dtpPocetak.setDateTimePermissive(LocalDateTime.of(date, time));
+        
+        Date input2 = s.getKraj();
+       
+        LocalDate date2 = input2.toInstant()
+                .atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalTime time2 = input2.toInstant()
+                .atZone(ZoneId.systemDefault()).toLocalTime();
+        dtpZavrsetak.setDateTimePermissive(LocalDateTime.of(date2, time2));
 
-        cmbRiboloviste.setSelectedItem(s.getRiboloviste());
+        
 
     }
 
@@ -153,6 +165,12 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
         jLabel1.setText("Vrsta natjecanja");
 
         jLabel2.setText("Ribolovište");
+
+        cmbRiboloviste.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbRibolovisteActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Početak natjecanja");
 
@@ -314,6 +332,10 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_lstEntitetiValueChanged
+
+    private void cmbRibolovisteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbRibolovisteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbRibolovisteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
