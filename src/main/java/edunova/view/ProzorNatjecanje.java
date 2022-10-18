@@ -58,7 +58,7 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
         setTitle(Pomocno.NAZIV_APLIKACIJE + " "
                 + " Natjecanje");
         ucitajRibolovista();
-
+        prilagodiDatePicker();
     }
 
     private void prilagodiDatePicker() {
@@ -67,7 +67,10 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
         dps.setFormatForDatesCommonEra(Pomocno.FORMAT_DATUMA);
         dps.setTranslationClear("Očisti");
         dps.setTranslationToday("Danas");
-        dtpPocetak.setDateTimeStrict(LocalDateTime.of(LocalDate.MAX, LocalTime.MIN));
+        dtpPocetak.getDatePicker().setSettings(dps);
+        dtpPocetak.getTimePicker().setLocale(new Locale("hr", "HR"));
+        dtpPocetak.getTimePicker().getSettings().setFormatForDisplayTime("HH:mm");
+        dtpPocetak.getTimePicker().getSettings().setFormatForMenuTimes("HH:mm");
     }
 
     private void ucitajRibolovista() {
@@ -96,13 +99,23 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
 
         var s = obrada.getEntitet();
         s.setVrsta(txtVrsta.getText());
-        s.setPocetak("17_listopada_2022_0900");
-       /* s.setPocetak(dtpPocetak.getDatePicker() != null
-                ? Date.from(Instant.MIN)
-                : null
-        );
-       
-*/
+
+        if (dtpPocetak.getDatePicker() != null) {
+            LocalDateTime ldt = LocalDateTime.of(dtpPocetak.getDatePicker().getDate(),
+                     dtpPocetak.getTimePicker().getTime());
+            s.setPocetak(Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant()));
+        } else {
+            s.setPocetak(null);
+        }
+
+        if (dtpZavrsetak.getDatePicker() != null) {
+            LocalDateTime ldt = LocalDateTime.of(dtpZavrsetak.getDatePicker().getDate(),
+                     dtpZavrsetak.getTimePicker().getTime());
+            s.setKraj(Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant()));
+        } else {
+            s.setPocetak(null);
+        }
+
         s.setRiboloviste((Riboloviste) cmbRiboloviste.getSelectedItem());
 
     }

@@ -23,7 +23,7 @@ public class Pomocno {
     /**
      *
      */
-    public static final String FORMAT_DATUMA = "dd. MMMM yyyy. HH:mm";
+    public static final String FORMAT_DATUMA = "dd. MMMM yyyy.";
     public static final String NAZIV_APLIKACIJE = "RIBOLOV APP";
     public static Operater operater;
     

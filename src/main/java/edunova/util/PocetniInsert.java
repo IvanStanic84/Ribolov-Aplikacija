@@ -8,7 +8,9 @@ import edunova.model.Ribic;
 import edunova.model.Riboloviste;
 import edunova.model.Ribolovnodrustvo;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import org.hibernate.Session;
 import org.mindrot.jbcrypt.BCrypt;
@@ -275,11 +277,23 @@ public class PocetniInsert {
         natjecanja.add(natjecanje5());
     }
 
+    private Date createDate(int godina, int mjesec,
+            int dan, int sat, int minute) {
+        GregorianCalendar gc = (GregorianCalendar) Calendar.getInstance();
+        gc.set(Calendar.YEAR, godina);
+        gc.set(Calendar.MONTH, mjesec - 1);
+        gc.set(Calendar.DAY_OF_MONTH, dan);
+        gc.set(Calendar.HOUR_OF_DAY, sat);
+        gc.set(Calendar.MINUTE, minute);
+        return gc.getTime();
+    }
+
     private Natjecanje natjecanje1() {
         Natjecanje n = new Natjecanje();
         n.setVrsta("Županijska liga");
-        n.setPocetak("17. listopada 2022. 09:00");
-        n.setKraj(new Date());
+
+        n.setPocetak(createDate(2022, 10, 1, 9, 0));
+        n.setKraj(createDate(2022, 10, 1, 12, 0));
         n.setRiboloviste(ribolovista.get(0));
         sess.persist(n);
         return n;
@@ -288,8 +302,8 @@ public class PocetniInsert {
     private Natjecanje natjecanje2() {
         Natjecanje n = new Natjecanje();
         n.setVrsta("Županijski kup");
-        n.setPocetak("18. listopada 2022. 09:00");
-        n.setKraj(new Date());
+        n.setPocetak(createDate(2022, 10, 2, 9, 0));
+        n.setKraj(createDate(2022, 10, 2, 12, 0));
         n.setRiboloviste(ribolovista.get(1));
         sess.persist(n);
         return n;
@@ -298,8 +312,8 @@ public class PocetniInsert {
     private Natjecanje natjecanje3() {
         Natjecanje n = new Natjecanje();
         n.setVrsta("Društveni kup");
-        n.setPocetak(new Date());
-        n.setKraj(new Date());
+        n.setPocetak(createDate(2022, 10, 3, 9, 0));
+        n.setKraj(createDate(2022, 10, 3, 12, 0));
         n.setRiboloviste(ribolovista.get(2));
         sess.persist(n);
         return n;
@@ -308,8 +322,8 @@ public class PocetniInsert {
     private Natjecanje natjecanje4() {
         Natjecanje n = new Natjecanje();
         n.setVrsta("Državno prvenstvo");
-        n.setPocetak(new Date());
-        n.setKraj(new Date());
+        n.setPocetak(createDate(2022, 10, 4, 9, 0));
+        n.setKraj(createDate(2022, 10, 4, 12, 0));
         n.setRiboloviste(ribolovista.get(3));
         sess.persist(n);
         return n;
@@ -318,8 +332,8 @@ public class PocetniInsert {
     private Natjecanje natjecanje5() {
         Natjecanje n = new Natjecanje();
         n.setVrsta("Kup ribolovnog središta");
-        n.setPocetak(new Date());
-        n.setKraj(new Date());
+        n.setPocetak(createDate(2022, 10, 5, 9, 0));
+        n.setKraj(createDate(2022, 10, 5, 12, 0));
         n.setRiboloviste(ribolovista.get(3));
         sess.persist(n);
         return n;
