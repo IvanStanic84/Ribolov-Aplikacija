@@ -3,6 +3,7 @@ package edunova.util;
 import com.github.javafaker.Faker;
 import edunova.model.Natjecanje;
 import edunova.model.Operater;
+import edunova.model.Rezultat;
 import edunova.model.Riba;
 import edunova.model.Ribic;
 import edunova.model.Riboloviste;
@@ -27,6 +28,7 @@ public class PocetniInsert {
     private List<Ribolovnodrustvo> ribolovnadrustva;
     private List<Riboloviste> ribolovista;
     private List<Natjecanje> natjecanja;
+    private List<Rezultat> rezultati;
     private Session sess;
     private Faker faker;
 
@@ -37,6 +39,7 @@ public class PocetniInsert {
         ribolovista = new ArrayList<>();
         ribici = new ArrayList<>();
         natjecanja = new ArrayList<>();
+        rezultati = new ArrayList<>();
         sess = HibernateUtil.getSession();
         faker = new Faker();
         sess.beginTransaction();
@@ -45,6 +48,7 @@ public class PocetniInsert {
         kreirajRibolovista();
         kreirajRibice();
         kreirajNatjecanja();
+        kreirajRezultate();
         kreirajOperatera();
         sess.getTransaction().commit();
     }
@@ -348,6 +352,45 @@ public class PocetniInsert {
         o.setOib("70515566734");
         o.setLozinka(BCrypt.hashpw("stamba", BCrypt.gensalt()));
         sess.persist(o);
+    }
+
+    private void kreirajRezultate() {
+
+        rezultati.add(rezultat1());
+        rezultati.add(rezultat2());
+        rezultati.add(rezultat3());
+
+    }
+
+    private Rezultat rezultat1() {
+        Rezultat r = new Rezultat();
+        r.setMasa(1567);
+        r.setNatjecanje(natjecanja.get(0));
+        r.setRiba(ribe.get(0));
+        r.setRibic(ribici.get(0));
+        sess.persist(r);
+        return r;
+
+    }
+
+    private Rezultat rezultat2() {
+        Rezultat r = new Rezultat();
+        r.setMasa(321);
+        r.setNatjecanje(natjecanja.get(1));
+        r.setRiba(ribe.get(1));
+        r.setRibic(ribici.get(1));
+        sess.persist(r);
+        return r;
+    }
+
+    private Rezultat rezultat3() {
+        Rezultat r = new Rezultat();
+        r.setMasa(569);
+        r.setNatjecanje(natjecanja.get(2));
+        r.setRiba(ribe.get(2));
+        r.setRibic(ribici.get(2));
+        sess.persist(r);
+        return r;
     }
 
 }
