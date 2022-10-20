@@ -32,17 +32,21 @@ public class ObradaRiboloviste extends Obrada<Riboloviste> {
         kontrolaNaziv();
         kontrolaVrstaVode();
         kontrolaNazivMoraBitiUnesen();
-  
+
     }
 
     @Override
     protected void kontrolaDelete() throws RibolovException {
-        if (entitet.getNatjecanja() != null
-                && !entitet.getNatjecanja().isEmpty()) {
+
+        Integer i = session.createNativeQuery(
+                "select count(*) from natjecanje where riboloviste_sifra=:p",
+                Integer.class).setParameter("p", entitet.getSifra()).getSingleResult();
+        if (i > 0) {
             throw new RibolovException("Ribolovište ima natjecanja "
                     + "i ne može se "
                     + "obrisati dok se ne obrišu sva natjecanja na ovom ribolovištu");
         }
+
     }
 
     @Override

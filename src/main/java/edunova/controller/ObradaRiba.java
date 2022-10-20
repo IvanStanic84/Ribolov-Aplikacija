@@ -31,12 +31,16 @@ public class ObradaRiba extends Obrada<Riba> {
 
     @Override
     protected void kontrolaDelete() throws RibolovException {
-        if (entitet.getRezultati() != null
-                && !entitet.getRezultati().isEmpty()) {
+
+        Integer i = session.createNativeQuery(
+                "select count(*) from rezultati where riba_sifra=:p",
+                Integer.class).setParameter("p", entitet.getSifra()).getSingleResult();
+        if (i > 0) {
             throw new RibolovException("Riba ima rezultate na natjecanjima "
                     + "i ne može se "
                     + "obrisati dok se ne obrišu svi rezultati koji sadže ovu ribu");
         }
+
     }
 
     @Override

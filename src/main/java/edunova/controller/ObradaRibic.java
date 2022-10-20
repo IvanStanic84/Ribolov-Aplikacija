@@ -39,12 +39,20 @@ public class ObradaRibic extends Obrada<Ribic> {
 
     @Override
     protected void kontrolaDelete() throws RibolovException {
-        if (entitet.getRezultati() != null
-                && !entitet.getRezultati().isEmpty()) {
-            throw new RibolovException("Ribič ima postignute rezultate "
+       
+      
+        Integer i = session.createNativeQuery(
+                "select count(*) from rezultati where ribic_sifra=:p",
+                Integer.class).setParameter("p", entitet.getSifra()).getSingleResult();
+        if (i > 0) {
+           throw new RibolovException("Ribič ima postignute rezultate "
                     + "i ne može se "
                     + "obrisati dok se ne obrišu svi rezultati kojima je ovaj ribič prisustvovao");
         }
+
+        
+        
+        
     }
 
     @Override
