@@ -44,9 +44,10 @@ public class ObradaRezultat extends Obrada<Rezultat> {
     }
 
     private void kontrolaMasa() throws RibolovException {
+        kontrolaMasaUnesena();
         kontrolaMasaJeBroj();
         kontrolaMasaUGramima();
-        kontrolaMasaUnesena();
+        
     }
 
     private void kontrolaMasaUGramima() throws RibolovException {
@@ -64,7 +65,7 @@ public class ObradaRezultat extends Obrada<Rezultat> {
     }
 
     private void kontrolaMasaJeBroj() throws RibolovException {
-        if (Objects.equals(entitet.getMasa(), int.class)) {
+        if(entitet.getMasa()==0){
             throw new RibolovException("Masa mora biti broj!");
         }
 

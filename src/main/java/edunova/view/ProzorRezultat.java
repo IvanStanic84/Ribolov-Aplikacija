@@ -101,14 +101,18 @@ public class ProzorRezultat extends javax.swing.JFrame {
         s.setRibic((Ribic) cmbRibic.getSelectedItem());
         s.setRiba((Riba) cmbRiba.getSelectedItem());
 
-        try {
+        if(txtMasa.getText().trim().isEmpty()){
+            s.setMasa(null);
+        }else{
+           try {
             s.setMasa(
-                    Integer.parseInt(
-                            txtMasa.getText()
-                    ));
+                    Integer.parseInt(txtMasa.getText()));
         } catch (Exception ex) {
             s.setMasa(0);
+        } 
         }
+        
+        
     }
 
     /**

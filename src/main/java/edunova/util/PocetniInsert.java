@@ -290,6 +290,8 @@ public class PocetniInsert {
         gc.set(Calendar.DAY_OF_MONTH, dan);
         gc.set(Calendar.HOUR_OF_DAY, sat);
         gc.set(Calendar.MINUTE, minute);
+        gc.set(Calendar.SECOND,0);
+        gc.set((Calendar.MILLISECOND), 0);
         return gc.getTime();
     }
 

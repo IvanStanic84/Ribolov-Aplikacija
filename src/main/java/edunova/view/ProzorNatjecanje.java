@@ -63,15 +63,20 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
     }
 
     private void prilagodiDatePicker() {
+        definirajPostavkeDtp(dtpPocetak);
+        definirajPostavkeDtp(dtpZavrsetak);
+    }
+    
+    private void definirajPostavkeDtp(DateTimePicker dtp){
         DatePickerSettings dps
                 = new DatePickerSettings(new Locale("hr", "HR"));
         dps.setFormatForDatesCommonEra(Pomocno.FORMAT_DATUMA);
         dps.setTranslationClear("Očisti");
         dps.setTranslationToday("Danas");
-        dtpPocetak.getDatePicker().setSettings(dps);
-        dtpPocetak.getTimePicker().setLocale(new Locale("hr", "HR"));
-        dtpPocetak.getTimePicker().getSettings().setFormatForDisplayTime("HH:mm");
-        dtpPocetak.getTimePicker().getSettings().setFormatForMenuTimes("HH:mm");
+        dtp.getDatePicker().setSettings(dps);
+        dtp.getTimePicker().setLocale(new Locale("hr", "HR"));
+        dtp.getTimePicker().getSettings().setFormatForDisplayTime("HH:mm");
+        dtp.getTimePicker().getSettings().setFormatForMenuTimes("HH:mm");
     }
 
     private void ucitajRibolovista() {
