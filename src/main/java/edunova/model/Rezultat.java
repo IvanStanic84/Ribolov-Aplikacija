@@ -64,7 +64,7 @@ public class Rezultat extends Entitet {
     }
     @Override
     public String toString() {
-        return natjecanje + ", " + ribic;
+        return ribic + ", " + natjecanje;
     }
 
 }

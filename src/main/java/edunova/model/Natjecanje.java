@@ -72,7 +72,7 @@ public class Natjecanje extends Entitet {
 
     @Override
     public String toString() {
-        return vrsta;
+        return vrsta + ", " + riboloviste.getNaziv();
     }
 
    

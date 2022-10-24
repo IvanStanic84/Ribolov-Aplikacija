@@ -38,8 +38,13 @@ public class ObradaNatjecanje extends Obrada<Natjecanje> {
 
     @Override
     protected void kontrolaDelete() throws RibolovException {
-
-        Integer i = session.createNativeQuery(
+        if (entitet.getRezultati() != null
+                && !entitet.getRezultati().isEmpty()) {
+            throw new RibolovException("Natjecanje ima unešene rezultate "
+                    + "i ne može se "
+                    + "obrisati dok se ne obrišu svi rezultati koji sadže ovo natjecanje");
+        }
+        /*Integer i = session.createNativeQuery(
                 "select count(*) from rezultati where natjecanje_sifra=:p",
                 Integer.class).setParameter("p", entitet.getSifra()).getSingleResult();
         if (i > 0) {
@@ -47,7 +52,7 @@ public class ObradaNatjecanje extends Obrada<Natjecanje> {
                     + "i ne može se "
                     + "obrisati dok se ne obrišu svi rezultati koji sadže ovo natjecanje");
         }
-
+         */
     }
 
     @Override

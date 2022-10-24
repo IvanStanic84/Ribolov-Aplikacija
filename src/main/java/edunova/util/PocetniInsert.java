@@ -39,7 +39,7 @@ public class PocetniInsert {
         ribolovista = new ArrayList<>();
         ribici = new ArrayList<>();
         natjecanja = new ArrayList<>();
-        rezultati = new ArrayList<>();
+        //rezultati = new ArrayList<>();
         sess = HibernateUtil.getSession();
         faker = new Faker();
         sess.beginTransaction();
