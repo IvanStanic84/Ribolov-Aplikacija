@@ -108,7 +108,7 @@ public class ProzorRezultat extends javax.swing.JFrame {
                 s.setMasa(
                         Integer.parseInt(txtMasa.getText()));
             } catch (Exception ex) {
-                s.setMasa(0);
+                s.setMasa(s.getMasa());
             }
         }
 
