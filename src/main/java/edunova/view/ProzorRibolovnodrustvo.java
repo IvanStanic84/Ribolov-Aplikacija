@@ -200,6 +200,7 @@ public class ProzorRibolovnodrustvo extends javax.swing.JFrame {
         popuniModel();
         try {
             obrada.create();
+            selectedIndex = lstEntiteti.getSelectedIndex();
             ucitaj();
         } catch (RibolovException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getPoruka());
@@ -219,6 +220,7 @@ public class ProzorRibolovnodrustvo extends javax.swing.JFrame {
         popuniModel();
         try {
             obrada.update();
+            selectedIndex = lstEntiteti.getSelectedIndex();
             ucitaj();
         } catch (RibolovException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getPoruka());
@@ -235,6 +237,10 @@ public class ProzorRibolovnodrustvo extends javax.swing.JFrame {
         }
         try {
             obrada.delete();
+            selectedIndex = lstEntiteti.getSelectedIndex() - 1;
+            if (selectedIndex < 0) {
+                selectedIndex = 0;
+            }
             ucitaj();
         } catch (RibolovException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getPoruka());

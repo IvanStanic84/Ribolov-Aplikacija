@@ -101,18 +101,17 @@ public class ProzorRezultat extends javax.swing.JFrame {
         s.setRibic((Ribic) cmbRibic.getSelectedItem());
         s.setRiba((Riba) cmbRiba.getSelectedItem());
 
-        if(txtMasa.getText().trim().isEmpty()){
+        if (txtMasa.getText().trim().isEmpty()) {
             s.setMasa(null);
-        }else{
-           try {
-            s.setMasa(
-                    Integer.parseInt(txtMasa.getText()));
-        } catch (Exception ex) {
-            s.setMasa(0);
-        } 
+        } else {
+            try {
+                s.setMasa(
+                        Integer.parseInt(txtMasa.getText()));
+            } catch (Exception ex) {
+                s.setMasa(0);
+            }
         }
-        
-        
+
     }
 
     /**
@@ -261,6 +260,7 @@ public class ProzorRezultat extends javax.swing.JFrame {
         popuniModel();
         try {
             obrada.create();
+            selectedIndex = lstEntiteti.getSelectedIndex();
             ucitaj();
         } catch (RibolovException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getPoruka());
@@ -273,6 +273,10 @@ public class ProzorRezultat extends javax.swing.JFrame {
         }
         try {
             obrada.delete();
+            selectedIndex = lstEntiteti.getSelectedIndex() - 1;
+            if (selectedIndex < 0) {
+                selectedIndex = 0;
+            }
             ucitaj();
         } catch (RibolovException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getPoruka());
@@ -287,6 +291,7 @@ public class ProzorRezultat extends javax.swing.JFrame {
         popuniModel();
         try {
             obrada.update();
+            selectedIndex = lstEntiteti.getSelectedIndex();
             ucitaj();
         } catch (RibolovException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getPoruka());

@@ -66,8 +66,8 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
         definirajPostavkeDtp(dtpPocetak);
         definirajPostavkeDtp(dtpZavrsetak);
     }
-    
-    private void definirajPostavkeDtp(DateTimePicker dtp){
+
+    private void definirajPostavkeDtp(DateTimePicker dtp) {
         DatePickerSettings dps
                 = new DatePickerSettings(new Locale("hr", "HR"));
         dps.setFormatForDatesCommonEra(Pomocno.FORMAT_DATUMA);
@@ -93,22 +93,20 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
         txtVrsta.setText(s.getVrsta());
         cmbRiboloviste.setSelectedItem(s.getRiboloviste());
         Date input = s.getPocetak();
-       
+
         LocalDate date = input.toInstant()
                 .atZone(ZoneId.systemDefault()).toLocalDate();
         LocalTime time = input.toInstant()
                 .atZone(ZoneId.systemDefault()).toLocalTime();
         dtpPocetak.setDateTimePermissive(LocalDateTime.of(date, time));
-        
+
         Date input2 = s.getKraj();
-       
+
         LocalDate date2 = input2.toInstant()
                 .atZone(ZoneId.systemDefault()).toLocalDate();
         LocalTime time2 = input2.toInstant()
                 .atZone(ZoneId.systemDefault()).toLocalTime();
         dtpZavrsetak.setDateTimePermissive(LocalDateTime.of(date2, time2));
-
-        
 
     }
 
@@ -119,7 +117,7 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
 
         if (dtpPocetak.getDatePicker() != null) {
             LocalDateTime ldt = LocalDateTime.of(dtpPocetak.getDatePicker().getDate(),
-                     dtpPocetak.getTimePicker().getTime());
+                    dtpPocetak.getTimePicker().getTime());
             s.setPocetak(Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant()));
         } else {
             s.setPocetak(null);
@@ -127,7 +125,7 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
 
         if (dtpZavrsetak.getDatePicker() != null) {
             LocalDateTime ldt = LocalDateTime.of(dtpZavrsetak.getDatePicker().getDate(),
-                     dtpZavrsetak.getTimePicker().getTime());
+                    dtpZavrsetak.getTimePicker().getTime());
             s.setKraj(Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant()));
         } else {
             s.setPocetak(null);
@@ -287,6 +285,7 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
         popuniModel();
         try {
             obrada.create();
+            selectedIndex = lstEntiteti.getModel().getSize();
             ucitaj();
         } catch (RibolovException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getPoruka());
@@ -304,6 +303,7 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
         popuniModel();
         try {
             obrada.update();
+            selectedIndex = lstEntiteti.getModel().getSize();
             ucitaj();
         } catch (RibolovException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getPoruka());
@@ -319,6 +319,10 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
         }
         try {
             obrada.delete();
+            selectedIndex = lstEntiteti.getSelectedIndex() - 1;
+            if (selectedIndex < 0) {
+                selectedIndex = 0;
+            }
             ucitaj();
         } catch (RibolovException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getPoruka());
