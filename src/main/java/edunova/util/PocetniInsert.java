@@ -28,7 +28,7 @@ public class PocetniInsert {
     private List<Ribolovnodrustvo> ribolovnadrustva;
     private List<Riboloviste> ribolovista;
     private List<Natjecanje> natjecanja;
-    private List<Rezultat> rezultati;
+    //private List<Rezultat> rezultati;
     private Session sess;
     private Faker faker;
 
@@ -48,7 +48,7 @@ public class PocetniInsert {
         kreirajRibolovista();
         kreirajRibice();
         kreirajNatjecanja();
-        kreirajRezultate();
+        //kreirajRezultate();
         kreirajOperatera();
         sess.getTransaction().commit();
     }
@@ -355,7 +355,7 @@ public class PocetniInsert {
         o.setLozinka(BCrypt.hashpw("stamba", BCrypt.gensalt()));
         sess.persist(o);
     }
-
+/*
     private void kreirajRezultate() {
 
         rezultati.add(rezultat1());
@@ -393,6 +393,6 @@ public class PocetniInsert {
         r.setRibic(ribici.get(2));
         sess.persist(r);
         return r;
-    }
+    }*/
 
 }

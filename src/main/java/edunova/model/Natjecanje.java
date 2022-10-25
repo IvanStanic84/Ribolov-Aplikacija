@@ -10,6 +10,8 @@ import java.util.List;
 @Entity
 public class Natjecanje extends Entitet {
 
+   
+
     private String vrsta;
     private Date pocetak;
     private Date kraj;

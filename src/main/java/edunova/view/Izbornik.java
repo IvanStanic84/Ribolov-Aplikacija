@@ -137,7 +137,7 @@ public class Izbornik extends javax.swing.JFrame {
         new ProzorNatjecanje().setVisible(true);    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-       new ProzorRezultat().setVisible(true);
+       new ProzorRezultat().setVisible(true); 
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
 
