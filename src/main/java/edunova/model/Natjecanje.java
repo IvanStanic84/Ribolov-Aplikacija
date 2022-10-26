@@ -10,26 +10,22 @@ import java.util.List;
 @Entity
 public class Natjecanje extends Entitet {
 
-   
-
     private String vrsta;
     private Date pocetak;
     private Date kraj;
-    private String riba;
+
     @ManyToOne
     private Riboloviste riboloviste;
-    
+
     @OneToMany(mappedBy = "natjecanje")
     private List<NatjecanjeRibic> ribiciNaNatjecanju = new ArrayList<>();
 
-    
-
-    public Natjecanje(Integer sifra, String vrsta, Date pocetak, Date kraj, String riba, Riboloviste riboloviste, List<NatjecanjeRibic> ribiciNaNatjecanju) {
+    public Natjecanje(Integer sifra, String vrsta, Date pocetak, Date kraj, Riboloviste riboloviste, List<NatjecanjeRibic> ribiciNaNatjecanju) {
         super(sifra);
         this.vrsta = vrsta;
         this.pocetak = pocetak;
         this.kraj = kraj;
-        this.riba=riba;
+
         this.riboloviste = riboloviste;
         this.ribiciNaNatjecanju = ribiciNaNatjecanju;
     }
@@ -40,14 +36,6 @@ public class Natjecanje extends Entitet {
 
     public void setRibiciNaNatjecanju(List<NatjecanjeRibic> ribiciNaNatjecanju) {
         this.ribiciNaNatjecanju = ribiciNaNatjecanju;
-    }
-
-    public String getRiba() {
-        return riba;
-    }
-
-    public void setRiba(String riba) {
-        this.riba = riba;
     }
 
     public Natjecanje() {
@@ -90,5 +78,4 @@ public class Natjecanje extends Entitet {
         return vrsta + ", " + riboloviste.getNaziv();
     }
 
-   
 }

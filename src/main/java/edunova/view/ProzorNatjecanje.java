@@ -22,9 +22,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -92,7 +95,9 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
 
     private void popuniView() {
         var s = obrada.getEntitet();
-        //txtVrsta.setText(s.getVrsta());
+        txtVrstaNatjecanja.setText(s.getVrsta());
+        //txtVrstaRibe.setText(s.get);
+        //txtMasa.setText(s.getMasa);
         cmbRiboloviste.setSelectedItem(s.getRiboloviste());
         Date input = s.getPocetak();
 
@@ -115,7 +120,9 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
     private void popuniModel() {
 
         var s = obrada.getEntitet();
-        //s.setVrsta(txtVrsta.getText());
+        s.setVrsta(txtVrstaNatjecanja.getText());
+       // s.set(txtVrstaRibe.getText());
+      
 
         if (dtpPocetak.getDatePicker() != null) {
             LocalDateTime ldt = LocalDateTime.of(dtpPocetak.getDatePicker().getDate(),
@@ -134,6 +141,16 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
         }
 
         s.setRiboloviste((Riboloviste) cmbRiboloviste.getSelectedItem());
+        
+        
+        
+        DefaultListModel<NatjecanjeRibic> m = (DefaultListModel<NatjecanjeRibic>) lstRibiciNaNatjecanju.getModel();
+
+        List<NatjecanjeRibic> noviRibiciNaNatjecanju = new ArrayList<>();
+        for (int i = 0; i < m.getSize(); i++) {
+            noviRibiciNaNatjecanju.add(m.getElementAt(i));
+        }
+        //obrada.setnoviRibiciNaNatjecanju(noviRibiciNaNatjecanju);
 
     }
 
@@ -464,7 +481,9 @@ if (evt.getValueIsAdjusting()
                 || lstRibiciNaNatjecanju.getSelectedValue() == null) {
             return;
         }
-    // txtVrstaRibe.setText(lstRibiciNaNatjecanju.getSelectedValue().getVrstaRibe());
+
+    txtVrstaRibe.setText(lstRibiciNaNatjecanju.getSelectedValue().getVrstaRibe());
+    txtMasa.setText(lstRibiciNaNatjecanju.getSelectedValue().getMasa().toString());
         //taOcijena.setText(lstDjelatniciNaEdukaciji.getSelectedValue().getOcijena());
 
     }//GEN-LAST:event_lstRibiciNaNatjecanjuValueChanged
