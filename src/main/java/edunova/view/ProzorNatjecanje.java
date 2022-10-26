@@ -92,12 +92,23 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
         cmbRiboloviste.setModel(m);
 
     }
+     
+
+    private NatjecanjeRibic kreirajRibiceNaNatjecanjima(Natjecanje n, Ribic rc, String s, String i) {
+        NatjecanjeRibic nr = new NatjecanjeRibic();
+        nr.setNatjecanje(n);
+        nr.setRibic(rc);
+        nr.setVrstaRibe(s);
+        nr.setMasa(i);
+
+        return nr;
+    
+}
 
     private void popuniView() {
         var s = obrada.getEntitet();
         txtVrstaNatjecanja.setText(s.getVrsta());
-        //txtVrstaRibe.setText(s.get);
-        //txtMasa.setText(s.getMasa);
+       
         cmbRiboloviste.setSelectedItem(s.getRiboloviste());
         Date input = s.getPocetak();
 
@@ -121,7 +132,7 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
 
         var s = obrada.getEntitet();
         s.setVrsta(txtVrstaNatjecanja.getText());
-       // s.set(txtVrstaRibe.getText());
+      
       
 
         if (dtpPocetak.getDatePicker() != null) {
@@ -263,6 +274,12 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
         jButton1.setText("Traži");
 
         jLabel8.setText("Masa");
+
+        txtMasa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMasaKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -449,18 +466,7 @@ private void pocistiView() {
         dtpPocetak.setDateTimePermissive(null);
         dtpZavrsetak.setDateTimePermissive(null);
         txtVrstaRibe.setText("");
-}  
 
-    private NatjecanjeRibic kreirajRibiceNaNatjecanjima(Natjecanje n, Ribic rc, String s, Integer i) {
-        NatjecanjeRibic nr = new NatjecanjeRibic();
-        nr.setNatjecanje(n);
-        nr.setRibic(rc);
-        nr.setVrstaRibe(s);
-        nr.setMasa(i);
-
-        return nr;
-    
-        
 
 
     }//GEN-LAST:event_btnObrisiActionPerformed
@@ -499,6 +505,20 @@ if (evt.getValueIsAdjusting()
         lstRibiciNaNatjecanju.getSelectedValue().setVrstaRibe(s);
 
     }//GEN-LAST:event_txtVrstaRibeKeyTyped
+
+    private void txtMasaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMasaKeyTyped
+                                            
+        if (lstRibiciNaNatjecanju.getSelectedValue() == null) {
+            return;
+        }
+
+        var s = txtMasa.getText() + evt.getKeyChar();
+        s = s.replace((char) 22, (char) 0);
+
+        lstRibiciNaNatjecanju.getSelectedValue().setMasa(s);
+
+    
+    }//GEN-LAST:event_txtMasaKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -45,16 +45,6 @@ public class ObradaNatjecanjeRibic extends Obrada<NatjecanjeRibic> {
 
     private void kontrolaMasa() throws RibolovException {
         kontrolaMasaUnesena();
-        kontrolaMasaJeBroj();
-        kontrolaMasaUGramima();
-        
-    }
-
-    private void kontrolaMasaUGramima() throws RibolovException {
-
-        if (entitet.getMasa() < 0) {
-            throw new RibolovException("Masa mora biti pozitivan broj!");
-        }
 
     }
 
@@ -64,10 +54,4 @@ public class ObradaNatjecanjeRibic extends Obrada<NatjecanjeRibic> {
         }
     }
 
-    private void kontrolaMasaJeBroj() throws RibolovException {
-        if(entitet.getMasa()==0){
-            throw new RibolovException("Masa mora biti broj!");
-        }
-
-    }
 }

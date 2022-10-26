@@ -11,21 +11,24 @@ public class NatjecanjeRibic extends Entitet {
     @ManyToOne
     private Ribic ribic;
     private String vrstaRibe;
-    private Integer masa;
+    private String masa;
 
-    public Integer getMasa() {
-        return masa;
-    }
+   
+    
 
-    public void setMasa(Integer masa) {
-        this.masa = masa;
-    }
-
-    public NatjecanjeRibic(Natjecanje natjecanje, Ribic ribic, String vrstaRibe, Integer masa, Integer sifra) {
+    public NatjecanjeRibic(Natjecanje natjecanje, Ribic ribic, String vrstaRibe, String masa, Integer sifra) {
         super(sifra);
         this.natjecanje = natjecanje;
         this.ribic = ribic;
         this.vrstaRibe = vrstaRibe;
+        this.masa = masa;
+    }
+
+    public String getMasa() {
+        return masa;
+    }
+
+    public void setMasa(String masa) {
         this.masa = masa;
     }
 
