@@ -104,6 +104,31 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
         return nr;
     
 }
+    
+    private void dodajRibiceNaNatjecanje() {
+
+        if (lstRibiciNaNatjecanju.getSelectedValue() == null) {
+            return;
+        }
+
+        DefaultListModel<NatjecanjeRibic> ribiciNaNatjecanju = (DefaultListModel<NatjecanjeRibic>) lstRibiciNaNatjecanju.getModel();
+
+        for (int i = 0; i < ribiciNaNatjecanju.getSize(); i++) {
+
+            if (ribiciNaNatjecanju.get(i).getRibic().getSifra().equals(lstRibiciUBazi.getSelectedValue().getSifra())) {
+                JOptionPane.showMessageDialog(rootPane, "Djelatnik je već  dodan na edukaciju");
+                return;
+
+            }
+
+        }
+
+        DefaultListModel<NatjecanjeRibic> m = (DefaultListModel<NatjecanjeRibic>) lstRibiciNaNatjecanju.getModel();
+        m.addElement(kreirajRibiceNaNatjecanjima(obrada.getEntitet(), lstRibiciUBazi.getSelectedValue(), ""));
+        txtUvjet.requestFocus();
+        txtUvjet.selectAll();
+        
+    }
 
     private void popuniView() {
         var s = obrada.getEntitet();
@@ -489,7 +514,7 @@ if (evt.getValueIsAdjusting()
         }
 
     txtVrstaRibe.setText(lstRibiciNaNatjecanju.getSelectedValue().getVrstaRibe());
-    txtMasa.setText(lstRibiciNaNatjecanju.getSelectedValue().getMasa().toString());
+    txtMasa.setText(lstRibiciNaNatjecanju.getSelectedValue().getMasa());
         //taOcijena.setText(lstDjelatniciNaEdukaciji.getSelectedValue().getOcijena());
 
     }//GEN-LAST:event_lstRibiciNaNatjecanjuValueChanged
