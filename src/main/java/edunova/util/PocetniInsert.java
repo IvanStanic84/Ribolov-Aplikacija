@@ -26,7 +26,6 @@ public class PocetniInsert {
     private List<Ribolovnodrustvo> ribolovnadrustva;
     private List<Riboloviste> ribolovista;
     private List<Natjecanje> natjecanja;
-    //private List<Rezultat> rezultati;
     private Session sess;
     private Faker faker;
 
@@ -36,16 +35,14 @@ public class PocetniInsert {
         ribolovista = new ArrayList<>();
         ribici = new ArrayList<>();
         natjecanja = new ArrayList<>();
-        //rezultati = new ArrayList<>();
         sess = HibernateUtil.getSession();
         faker = new Faker();
         sess.beginTransaction();
 
         kreirajRibolovnadrustva();
         kreirajRibolovista();
-        //kreirajRibice();
-        //kreirajNatjecanja();
-        //kreirajRezultate();
+        kreirajRibice();
+        kreirajNatjecanja();
         kreirajOperatera();
         sess.getTransaction().commit();
     }
@@ -162,7 +159,7 @@ public class PocetniInsert {
         sess.persist(rl);
         return rl;
     }
-/*
+
     private void kreirajRibice() {
         ribici.add(ribic1());
         ribici.add(ribic2());
@@ -170,15 +167,15 @@ public class PocetniInsert {
         ribici.add(ribic4());
         ribici.add(ribic5());
 
-    }*/
-/*
+    }
+
     private Ribic ribic1() {
         Ribic rc = new Ribic();
         rc.setIme("Sofija");
         rc.setPrezime("Stanić");
         rc.setRibolovnodrustvo(ribolovnadrustva.get(0));
         rc.setOib("94901320359");
-       
+
         sess.persist(rc);
         return rc;
     }
@@ -224,11 +221,11 @@ public class PocetniInsert {
     }
 
     private void kreirajNatjecanja() {
-        natjecanja.add(natjecanje1());
-        natjecanja.add(natjecanje2());
-        natjecanja.add(natjecanje3());
-        natjecanja.add(natjecanje4());
-        natjecanja.add(natjecanje5());
+        natjecanja.add(natjecanje1(ribici));
+        natjecanja.add(natjecanje2(ribici));
+        natjecanja.add(natjecanje3(ribici));
+        natjecanja.add(natjecanje4(ribici));
+        natjecanja.add(natjecanje5(ribici));
     }
 
     private Date createDate(int godina, int mjesec,
@@ -244,7 +241,7 @@ public class PocetniInsert {
         return gc.getTime();
     }
 
-    private Natjecanje natjecanje1() {
+    private Natjecanje natjecanje1(List<Ribic> ribici) {
         Natjecanje n = new Natjecanje();
         n.setVrsta("Županijska liga");
 
@@ -252,48 +249,193 @@ public class PocetniInsert {
         n.setKraj(createDate(2022, 10, 02, 12, 0));
         n.setRiboloviste(ribolovista.get(0));
         sess.persist(n);
+
+        NatjecanjeRibic nr1 = new NatjecanjeRibic();
+
+        nr1.setRibic(ribici.get(0));
+        nr1.setMasa(111);
+        nr1.setVrstaRibe("Šaran");
+
+        NatjecanjeRibic nr2 = new NatjecanjeRibic();
+
+        nr2.setRibic(ribici.get(1));
+        nr2.setMasa(222);
+        nr2.setVrstaRibe("Som");
+
+        NatjecanjeRibic nr3 = new NatjecanjeRibic();
+
+        nr3.setRibic(ribici.get(2));
+        nr3.setMasa(333);
+        nr3.setVrstaRibe("Snuđ");
+
+        sess.persist(nr1);
+        sess.persist(nr2);
+        sess.persist(nr3);
+
+        n.getRibiciNaNatjecanju().add(nr1);
+        n.getRibiciNaNatjecanju().add(nr2);
+        n.getRibiciNaNatjecanju().add(nr3);
+
+        sess.persist(n);
+
         return n;
     }
 
-    private Natjecanje natjecanje2() {
+    private Natjecanje natjecanje2(List<Ribic> ribici) {
         Natjecanje n = new Natjecanje();
         n.setVrsta("Županijski kup");
         n.setPocetak(createDate(2022, 10, 02, 9, 0));
         n.setKraj(createDate(2022, 10, 02, 12, 0));
         n.setRiboloviste(ribolovista.get(1));
         sess.persist(n);
+
+        NatjecanjeRibic nr1 = new NatjecanjeRibic();
+
+        nr1.setRibic(ribici.get(0));
+        nr1.setMasa(444);
+        nr1.setVrstaRibe("Šaran");
+
+        NatjecanjeRibic nr2 = new NatjecanjeRibic();
+
+        nr2.setRibic(ribici.get(2));
+        nr2.setMasa(555);
+        nr2.setVrstaRibe("Som");
+
+        NatjecanjeRibic nr3 = new NatjecanjeRibic();
+
+        nr3.setRibic(ribici.get(1));
+        nr3.setMasa(666);
+        nr3.setVrstaRibe("Snuđ");
+
+        sess.persist(nr1);
+        sess.persist(nr2);
+        sess.persist(nr3);
+
+        n.getRibiciNaNatjecanju().add(nr1);
+        n.getRibiciNaNatjecanju().add(nr2);
+        n.getRibiciNaNatjecanju().add(nr3);
+
+        sess.persist(n);
+
         return n;
     }
 
-    private Natjecanje natjecanje3() {
+    private Natjecanje natjecanje3(List<Ribic> ribici) {
         Natjecanje n = new Natjecanje();
         n.setVrsta("Društveni kup");
         n.setPocetak(createDate(2022, 10, 03, 9, 0));
         n.setKraj(createDate(2022, 10, 03, 12, 0));
         n.setRiboloviste(ribolovista.get(2));
         sess.persist(n);
-        return n;
-    }
 
-    private Natjecanje natjecanje4() {
-        Natjecanje n = new Natjecanje();
-        n.setVrsta("Državno prvenstvo");
-        n.setPocetak(createDate(2022, 10, 04, 9, 0));
-        n.setKraj(createDate(2022, 10, 04, 12, 0));
-        n.setRiboloviste(ribolovista.get(3));
+        NatjecanjeRibic nr1 = new NatjecanjeRibic();
+
+        nr1.setRibic(ribici.get(0));
+        nr1.setMasa(111);
+        nr1.setVrstaRibe("Šaran");
+
+        NatjecanjeRibic nr2 = new NatjecanjeRibic();
+
+        nr2.setRibic(ribici.get(1));
+        nr2.setMasa(222);
+        nr2.setVrstaRibe("Som");
+
+        NatjecanjeRibic nr3 = new NatjecanjeRibic();
+
+        nr3.setRibic(ribici.get(2));
+        nr3.setMasa(333);
+        nr3.setVrstaRibe("Snuđ");
+
+        sess.persist(nr1);
+        sess.persist(nr2);
+        sess.persist(nr3);
+
+        n.getRibiciNaNatjecanju().add(nr1);
+        n.getRibiciNaNatjecanju().add(nr2);
+        n.getRibiciNaNatjecanju().add(nr3);
+
         sess.persist(n);
+
         return n;
     }
 
-    private Natjecanje natjecanje5() {
+    private Natjecanje natjecanje4(List<Ribic> ribici) {
         Natjecanje n = new Natjecanje();
         n.setVrsta("Kup ribolovnog središta");
         n.setPocetak(createDate(2022, 10, 5, 9, 0));
         n.setKraj(createDate(2022, 10, 5, 12, 0));
         n.setRiboloviste(ribolovista.get(3));
         sess.persist(n);
+
+        NatjecanjeRibic nr1 = new NatjecanjeRibic();
+
+        nr1.setRibic(ribici.get(0));
+        nr1.setMasa(111);
+        nr1.setVrstaRibe("Šaran");
+
+        NatjecanjeRibic nr2 = new NatjecanjeRibic();
+
+        nr2.setRibic(ribici.get(1));
+        nr2.setMasa(222);
+        nr2.setVrstaRibe("Som");
+
+        NatjecanjeRibic nr3 = new NatjecanjeRibic();
+
+        nr3.setRibic(ribici.get(2));
+        nr3.setMasa(333);
+        nr3.setVrstaRibe("Snuđ");
+
+        sess.persist(nr1);
+        sess.persist(nr2);
+        sess.persist(nr3);
+
+        n.getRibiciNaNatjecanju().add(nr1);
+        n.getRibiciNaNatjecanju().add(nr2);
+        n.getRibiciNaNatjecanju().add(nr3);
+
+        sess.persist(n);
+
         return n;
-    }*/
+    }
+
+    private Natjecanje natjecanje5(List<Ribic> ribici) {
+        Natjecanje n = new Natjecanje();
+        n.setVrsta("Kup ribolovnog središta");
+        n.setPocetak(createDate(2022, 10, 5, 9, 0));
+        n.setKraj(createDate(2022, 10, 5, 12, 0));
+        n.setRiboloviste(ribolovista.get(3));
+        sess.persist(n);
+
+        NatjecanjeRibic nr1 = new NatjecanjeRibic();
+
+        nr1.setRibic(ribici.get(0));
+        nr1.setMasa(111);
+        nr1.setVrstaRibe("Šaran");
+
+        NatjecanjeRibic nr2 = new NatjecanjeRibic();
+
+        nr2.setRibic(ribici.get(1));
+        nr2.setMasa(222);
+        nr2.setVrstaRibe("Som");
+
+        NatjecanjeRibic nr3 = new NatjecanjeRibic();
+
+        nr3.setRibic(ribici.get(2));
+        nr3.setMasa(333);
+        nr3.setVrstaRibe("Snuđ");
+
+        sess.persist(nr1);
+        sess.persist(nr2);
+        sess.persist(nr3);
+
+        n.getRibiciNaNatjecanju().add(nr1);
+        n.getRibiciNaNatjecanju().add(nr2);
+        n.getRibiciNaNatjecanju().add(nr3);
+
+        sess.persist(n);
+
+        return n;
+    }
 
     private void kreirajOperatera() {
 
@@ -304,44 +446,5 @@ public class PocetniInsert {
         o.setLozinka(BCrypt.hashpw("stamba", BCrypt.gensalt()));
         sess.persist(o);
     }
-    /*
-    private void kreirajRezultate() {
-
-        rezultati.add(rezultat1());
-        rezultati.add(rezultat2());
-        rezultati.add(rezultat3());
-
-    }
-
-    private NatjecanjeRibic rezultat1() {
-        NatjecanjeRibic r = new NatjecanjeRibic();
-        r.setMasa(1567);
-        r.setNatjecanje(natjecanja.get(0));
-        r.setRiba(ribe.get(0));
-        r.setRibic(ribici.get(0));
-        sess.persist(r);
-        return r;
-
-    }
-
-    private NatjecanjeRibic rezultat2() {
-        NatjecanjeRibic r = new NatjecanjeRibic();
-        r.setMasa(321);
-        r.setNatjecanje(natjecanja.get(1));
-        r.setRiba(ribe.get(1));
-        r.setRibic(ribici.get(1));
-        sess.persist(r);
-        return r;
-    }
-
-    private NatjecanjeRibic rezultat3() {
-        NatjecanjeRibic r = new NatjecanjeRibic();
-        r.setMasa(569);
-        r.setNatjecanje(natjecanja.get(2));
-        r.setRiba(ribe.get(2));
-        r.setRibic(ribici.get(2));
-        sess.persist(r);
-        return r;
-    }*/
 
 }

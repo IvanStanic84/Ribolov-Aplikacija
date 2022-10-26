@@ -217,12 +217,6 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
             }
         });
 
-        cmbRiboloviste.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbRibolovisteActionPerformed(evt);
-            }
-        });
-
         lstRibiciNaNatjecanju.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 lstRibiciNaNatjecanjuValueChanged(evt);
@@ -474,10 +468,6 @@ if (evt.getValueIsAdjusting()
         //taOcijena.setText(lstDjelatniciNaEdukaciji.getSelectedValue().getOcijena());
 
     }//GEN-LAST:event_lstRibiciNaNatjecanjuValueChanged
-
-    private void cmbRibolovisteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbRibolovisteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbRibolovisteActionPerformed
 
     private void txtVrstaRibeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtVrstaRibeKeyTyped
         if (lstRibiciNaNatjecanju.getSelectedValue() == null) {
