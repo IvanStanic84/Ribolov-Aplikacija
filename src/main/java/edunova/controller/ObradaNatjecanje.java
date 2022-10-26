@@ -8,6 +8,7 @@ import edunova.model.Natjecanje;
 import edunova.model.NatjecanjeRibic;
 import edunova.util.Pomocno;
 import edunova.util.RibolovException;
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Session;
 
@@ -16,7 +17,71 @@ import org.hibernate.Session;
  * @author Korisnik
  */
 public class ObradaNatjecanje extends Obrada<Natjecanje> {
-private List<NatjecanjeRibic> noviRibiciNaNatjecanju;
+
+    private List<NatjecanjeRibic> noviRibiciNaNatjecanju;
+
+    @Override
+    public void create() throws RibolovException {
+
+        kontrolaCreate();
+        session.beginTransaction();
+        session.persist(entitet);
+
+        List<NatjecanjeRibic> ribiciNaNatjecanju = new ArrayList<>();
+        NatjecanjeRibic novi;
+        for (NatjecanjeRibic de : noviRibiciNaNatjecanju) {
+
+            novi = new NatjecanjeRibic();
+            novi.setNatjecanje(entitet);
+            novi.setRibic(de.getRibic());
+            novi.setVrstaRibe(de.getVrstaRibe());
+            novi.setMasa(de.getMasa());
+            session.persist(novi);
+            ribiciNaNatjecanju.add(novi);
+
+        }
+
+        entitet.setRibiciNaNatjecanju(ribiciNaNatjecanju);
+        session.getTransaction().commit();
+
+    }
+
+    @Override
+    public void update() throws RibolovException {
+        kontrolaUpdate();
+        session.beginTransaction();
+
+        for (NatjecanjeRibic de : entitet.getRibiciNaNatjecanju()) {
+            session.remove(de);
+
+        }
+        for (NatjecanjeRibic de : noviRibiciNaNatjecanju) {
+            session.persist(de);
+        }
+
+        entitet.setRibiciNaNatjecanju(noviRibiciNaNatjecanju);
+        session.persist(entitet);
+        session.getTransaction().commit();
+        for (NatjecanjeRibic de : noviRibiciNaNatjecanju) {
+            session.refresh(de);
+        }
+
+    }
+
+    @Override
+    public void delete() throws RibolovException {
+        kontrolaDelete();
+        session.beginTransaction();
+
+        for (NatjecanjeRibic de : entitet.getRibiciNaNatjecanju()) {
+            session.remove(de);
+
+        }
+
+        session.remove(entitet);
+        session.getTransaction().commit();
+
+    }
 
     public List<NatjecanjeRibic> getNoviRibiciNaNatjecanju() {
         return noviRibiciNaNatjecanju;
@@ -41,6 +106,7 @@ private List<NatjecanjeRibic> noviRibiciNaNatjecanju;
     public void setSession(Session session) {
         this.session = session;
     }
+
     @Override
     public List<Natjecanje> read() {
         return session.createQuery("from Natjecanje", Natjecanje.class).list();
@@ -64,7 +130,7 @@ private List<NatjecanjeRibic> noviRibiciNaNatjecanju;
 
     @Override
     protected void kontrolaDelete() throws RibolovException {
-        if (entitet.getRibiciNaNatjecanju()!= null
+        if (entitet.getRibiciNaNatjecanju() != null
                 && !entitet.getRibiciNaNatjecanju().isEmpty()) {
             throw new RibolovException("Natjecanje ima unešene rezultate "
                     + "i ne može se "
