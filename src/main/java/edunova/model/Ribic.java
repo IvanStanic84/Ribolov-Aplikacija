@@ -3,6 +3,7 @@ package edunova.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,17 +16,20 @@ public class Ribic extends Entitet {
     private Ribolovnodrustvo ribolovnodrustvo;
 
     @OneToMany(mappedBy = "ribic")
-    private List<Rezultat> rezultati;
+    private List<NatjecanjeRibic> ribiciNaNatjecanju;
 
-    public List<Rezultat> getRezultati() {
-        return rezultati;
+    public Ribic() {
     }
 
-    public void setRezultati(List<Rezultat> rezultati) {
-        this.rezultati = rezultati;
+    public Ribic(String ime, String prezime, String oib, Ribolovnodrustvo ribolovnodrustvo, List<NatjecanjeRibic> ribiciNaNatjecanju) {
+        this.ime = ime;
+        this.prezime = prezime;
+        this.oib = oib;
+        this.ribolovnodrustvo = ribolovnodrustvo;
+        this.ribiciNaNatjecanju = ribiciNaNatjecanju;
     }
 
-    public Ribic(Integer sifra, String ime, String prezime, String oib, Ribolovnodrustvo ribolovnodrustvo) {
+    public Ribic(String ime, String prezime, String oib, Ribolovnodrustvo ribolovnodrustvo, Integer sifra) {
         super(sifra);
         this.ime = ime;
         this.prezime = prezime;
@@ -33,8 +37,12 @@ public class Ribic extends Entitet {
         this.ribolovnodrustvo = ribolovnodrustvo;
     }
 
-    public Ribic() {
-        super();
+    public List<NatjecanjeRibic> getRibiciNaNatjecanju() {
+        return ribiciNaNatjecanju;
+    }
+
+    public void setRibiciNaNatjecanju(List<NatjecanjeRibic> ribiciNaNatjecanju) {
+        this.ribiciNaNatjecanju = ribiciNaNatjecanju;
     }
 
     public String getIme() {

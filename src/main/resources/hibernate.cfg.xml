@@ -39,12 +39,13 @@
        
         <!-- moraju se slijedno navesti klase koje su mapirane -->
         <mapping class="edunova.model.Operater" />      
-        <mapping class="edunova.model.Riba" />   
+       
         <mapping class="edunova.model.Riboloviste" />
         <mapping class="edunova.model.Ribolovnodrustvo" />
         <mapping class="edunova.model.Ribic" />
+        <mapping class="edunova.model.NatjecanjeRibic" />
         <mapping class="edunova.model.Natjecanje" />
-        <mapping class="edunova.model.Rezultat" />
+        
         
        
     </session-factory>

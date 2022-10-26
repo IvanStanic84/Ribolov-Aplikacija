@@ -4,7 +4,7 @@
  */
 package edunova.controller;
 
-import edunova.model.Rezultat;
+import edunova.model.NatjecanjeRibic;
 import edunova.util.RibolovException;
 import java.util.List;
 import java.util.Objects;
@@ -13,14 +13,14 @@ import java.util.Objects;
  *
  * @author Korisnik
  */
-public class ObradaRezultat extends Obrada<Rezultat> {
+public class ObradaNatjecanjeRibic extends Obrada<NatjecanjeRibic> {
 
-    public ObradaRezultat() {
+    public ObradaNatjecanjeRibic() {
     }
 
     @Override
-    public List<Rezultat> read() {
-        return session.createQuery("from Rezultat", Rezultat.class).list();
+    public List<NatjecanjeRibic> read() {
+        return session.createQuery("from Rezultat", NatjecanjeRibic.class).list();
     }
 
     @Override
@@ -40,7 +40,7 @@ public class ObradaRezultat extends Obrada<Rezultat> {
 
     @Override
     protected String getNazivEntiteta() {
-        return "Rezultat";
+        return "NatjecanjeRibic";
     }
 
     private void kontrolaMasa() throws RibolovException {

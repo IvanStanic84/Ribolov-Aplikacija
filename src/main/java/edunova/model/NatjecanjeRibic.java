@@ -3,31 +3,43 @@ package edunova.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 
-
-
 @Entity
-public class Rezultat extends Entitet {
+public class NatjecanjeRibic extends Entitet {
 
     @ManyToOne
     private Natjecanje natjecanje;
     @ManyToOne
     private Ribic ribic;
-    @ManyToOne
-    private Riba riba;
+    private String vrstaRibe;
     private Integer masa;
-  
-    
-  
 
-    public Rezultat(Integer sifra, Natjecanje natjecanje, Ribic ribic, Riba riba, Integer masa) {
-        super(sifra);
-        this.natjecanje = natjecanje;
-        this.ribic = ribic;
-        this.riba = riba;
+    public Integer getMasa() {
+        return masa;
+    }
+
+    public void setMasa(Integer masa) {
         this.masa = masa;
     }
 
-    public Rezultat() {
+    public NatjecanjeRibic(Natjecanje natjecanje, Ribic ribic, String vrstaRibe, Integer masa, Integer sifra) {
+        super(sifra);
+        this.natjecanje = natjecanje;
+        this.ribic = ribic;
+        this.vrstaRibe = vrstaRibe;
+        this.masa = masa;
+    }
+
+    
+
+    public String getVrstaRibe() {
+        return vrstaRibe;
+    }
+
+    public void setVrstaRibe(String vrstaRibe) {
+        this.vrstaRibe = vrstaRibe;
+    }
+
+    public NatjecanjeRibic() {
         super();
     }
 
@@ -47,24 +59,9 @@ public class Rezultat extends Entitet {
         this.ribic = ribic;
     }
 
-    public Riba getRiba() {
-        return riba;
-    }
-
-    public void setRiba(Riba riba) {
-        this.riba = riba;
-    }
-
-    public Integer getMasa() {
-        return masa;
-    }
-
-    public void setMasa(Integer masa) {
-        this.masa = masa;
-    }
     @Override
     public String toString() {
-        return ribic + ", " + natjecanje;
+        return natjecanje.getVrsta();
     }
 
 }

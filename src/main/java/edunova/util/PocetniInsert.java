@@ -3,8 +3,7 @@ package edunova.util;
 import com.github.javafaker.Faker;
 import edunova.model.Natjecanje;
 import edunova.model.Operater;
-import edunova.model.Rezultat;
-import edunova.model.Riba;
+import edunova.model.NatjecanjeRibic;
 import edunova.model.Ribic;
 import edunova.model.Riboloviste;
 import edunova.model.Ribolovnodrustvo;
@@ -23,7 +22,6 @@ import org.mindrot.jbcrypt.BCrypt;
  */
 public class PocetniInsert {
 
-    private List<Riba> ribe;
     private List<Ribic> ribici;
     private List<Ribolovnodrustvo> ribolovnadrustva;
     private List<Riboloviste> ribolovista;
@@ -34,7 +32,6 @@ public class PocetniInsert {
 
     public PocetniInsert() {
 
-        ribe = new ArrayList<>();
         ribolovnadrustva = new ArrayList<>();
         ribolovista = new ArrayList<>();
         ribici = new ArrayList<>();
@@ -43,11 +40,11 @@ public class PocetniInsert {
         sess = HibernateUtil.getSession();
         faker = new Faker();
         sess.beginTransaction();
-        kreirajRibe();
+
         kreirajRibolovnadrustva();
         kreirajRibolovista();
-        kreirajRibice();
-        kreirajNatjecanja();
+        //kreirajRibice();
+        //kreirajNatjecanja();
         //kreirajRezultate();
         kreirajOperatera();
         sess.getTransaction().commit();
@@ -117,55 +114,6 @@ public class PocetniInsert {
 
     }
 
-    private void kreirajRibe() {
-        ribe.add(riba1());
-        ribe.add(riba2());
-        ribe.add(riba3());
-        ribe.add(riba4());
-        ribe.add(riba5());
-
-    }
-
-    private Riba riba1() {
-        Riba r = new Riba();
-
-        r.setVrsta("Šaran");
-        sess.persist(r);
-        return r;
-    }
-
-    private Riba riba2() {
-        Riba r = new Riba();
-
-        r.setVrsta("Amur");
-        sess.persist(r);
-        return r;
-    }
-
-    private Riba riba3() {
-        Riba r = new Riba();
-
-        r.setVrsta("Štuka");
-        sess.persist(r);
-        return r;
-    }
-
-    private Riba riba4() {
-        Riba r = new Riba();
-
-        r.setVrsta("Smuđ");
-        sess.persist(r);
-        return r;
-    }
-
-    private Riba riba5() {
-        Riba r = new Riba();
-
-        r.setVrsta("Ostala sitna riba");
-        sess.persist(r);
-        return r;
-    }
-
     private void kreirajRibolovista() {
 
         ribolovista.add(riboloviste1());
@@ -214,7 +162,7 @@ public class PocetniInsert {
         sess.persist(rl);
         return rl;
     }
-
+/*
     private void kreirajRibice() {
         ribici.add(ribic1());
         ribici.add(ribic2());
@@ -222,14 +170,15 @@ public class PocetniInsert {
         ribici.add(ribic4());
         ribici.add(ribic5());
 
-    }
-
+    }*/
+/*
     private Ribic ribic1() {
         Ribic rc = new Ribic();
         rc.setIme("Sofija");
         rc.setPrezime("Stanić");
         rc.setRibolovnodrustvo(ribolovnadrustva.get(0));
         rc.setOib("94901320359");
+       
         sess.persist(rc);
         return rc;
     }
@@ -290,7 +239,7 @@ public class PocetniInsert {
         gc.set(Calendar.DAY_OF_MONTH, dan);
         gc.set(Calendar.HOUR_OF_DAY, sat);
         gc.set(Calendar.MINUTE, minute);
-        gc.set(Calendar.SECOND,0);
+        gc.set(Calendar.SECOND, 0);
         gc.set((Calendar.MILLISECOND), 0);
         return gc.getTime();
     }
@@ -344,7 +293,7 @@ public class PocetniInsert {
         n.setRiboloviste(ribolovista.get(3));
         sess.persist(n);
         return n;
-    }
+    }*/
 
     private void kreirajOperatera() {
 
@@ -355,7 +304,7 @@ public class PocetniInsert {
         o.setLozinka(BCrypt.hashpw("stamba", BCrypt.gensalt()));
         sess.persist(o);
     }
-/*
+    /*
     private void kreirajRezultate() {
 
         rezultati.add(rezultat1());
@@ -364,8 +313,8 @@ public class PocetniInsert {
 
     }
 
-    private Rezultat rezultat1() {
-        Rezultat r = new Rezultat();
+    private NatjecanjeRibic rezultat1() {
+        NatjecanjeRibic r = new NatjecanjeRibic();
         r.setMasa(1567);
         r.setNatjecanje(natjecanja.get(0));
         r.setRiba(ribe.get(0));
@@ -375,8 +324,8 @@ public class PocetniInsert {
 
     }
 
-    private Rezultat rezultat2() {
-        Rezultat r = new Rezultat();
+    private NatjecanjeRibic rezultat2() {
+        NatjecanjeRibic r = new NatjecanjeRibic();
         r.setMasa(321);
         r.setNatjecanje(natjecanja.get(1));
         r.setRiba(ribe.get(1));
@@ -385,8 +334,8 @@ public class PocetniInsert {
         return r;
     }
 
-    private Rezultat rezultat3() {
-        Rezultat r = new Rezultat();
+    private NatjecanjeRibic rezultat3() {
+        NatjecanjeRibic r = new NatjecanjeRibic();
         r.setMasa(569);
         r.setNatjecanje(natjecanja.get(2));
         r.setRiba(ribe.get(2));

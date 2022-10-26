@@ -38,8 +38,8 @@ public class ObradaNatjecanje extends Obrada<Natjecanje> {
 
     @Override
     protected void kontrolaDelete() throws RibolovException {
-        if (entitet.getRezultati() != null
-                && !entitet.getRezultati().isEmpty()) {
+        if (entitet.getRibiciNaNatjecanju()!= null
+                && !entitet.getRibiciNaNatjecanju().isEmpty()) {
             throw new RibolovException("Natjecanje ima unešene rezultate "
                     + "i ne može se "
                     + "obrisati dok se ne obrišu svi rezultati koji sadže ovo natjecanje");

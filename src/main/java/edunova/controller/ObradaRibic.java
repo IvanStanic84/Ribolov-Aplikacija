@@ -39,8 +39,8 @@ public class ObradaRibic extends Obrada<Ribic> {
 
     @Override
     protected void kontrolaDelete() throws RibolovException {
-       if (entitet.getRezultati() != null
-                && !entitet.getRezultati().isEmpty()) {
+       if (entitet.getRibiciNaNatjecanju()!= null
+                && !entitet.getRibiciNaNatjecanju().isEmpty()) {
             throw new RibolovException("Ribič ima postignute rezultate "
                     + "i ne može se "
                     + "obrisati dok se ne obrišu svi rezultati kojima je ovaj ribič prisustvovao");

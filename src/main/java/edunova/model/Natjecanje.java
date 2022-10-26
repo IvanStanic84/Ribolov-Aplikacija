@@ -15,26 +15,39 @@ public class Natjecanje extends Entitet {
     private String vrsta;
     private Date pocetak;
     private Date kraj;
+    private String riba;
     @ManyToOne
     private Riboloviste riboloviste;
+    
     @OneToMany(mappedBy = "natjecanje")
-    private List<Rezultat> rezultati = new ArrayList<>();
+    private List<NatjecanjeRibic> ribiciNaNatjecanju = new ArrayList<>();
 
-    public List<Rezultat> getRezultati() {
-        return rezultati;
-    }
+    
 
-    public void setRezultati(List<Rezultat> rezultati) {
-        this.rezultati = rezultati;
-    }
-
-    public Natjecanje(Integer sifra, String vrsta, Date pocetak, Date kraj, Riboloviste riboloviste, List<Rezultat> rezultati) {
+    public Natjecanje(Integer sifra, String vrsta, Date pocetak, Date kraj, String riba, Riboloviste riboloviste, List<NatjecanjeRibic> ribiciNaNatjecanju) {
         super(sifra);
         this.vrsta = vrsta;
         this.pocetak = pocetak;
         this.kraj = kraj;
+        this.riba=riba;
         this.riboloviste = riboloviste;
-        this.rezultati = rezultati;
+        this.ribiciNaNatjecanju = ribiciNaNatjecanju;
+    }
+
+    public List<NatjecanjeRibic> getRibiciNaNatjecanju() {
+        return ribiciNaNatjecanju;
+    }
+
+    public void setRibiciNaNatjecanju(List<NatjecanjeRibic> ribiciNaNatjecanju) {
+        this.ribiciNaNatjecanju = ribiciNaNatjecanju;
+    }
+
+    public String getRiba() {
+        return riba;
+    }
+
+    public void setRiba(String riba) {
+        this.riba = riba;
     }
 
     public Natjecanje() {
