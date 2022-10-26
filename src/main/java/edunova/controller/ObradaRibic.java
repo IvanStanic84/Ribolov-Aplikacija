@@ -18,10 +18,22 @@ public class ObradaRibic extends Obrada<Ribic> {
     @Override
     public List<Ribic> read() {
         return session.createQuery("from Ribic", Ribic.class).list();
-    }
+        
+    }    
 
-    @Override
-    protected void kontrolaCreate() throws RibolovException {
+    public List<Ribic> read(String uvjet) {
+
+        return session.createQuery("from Ribic p where "
+                + " lower(concat(p.ime,' ',p.prezime)) like :uvjet", Ribic.class)
+                .setParameter("uvjet", "%" + uvjet.toLowerCase() + "%")
+                .setMaxResults(5)
+                .list();
+
+    
+}
+
+@Override
+protected void kontrolaCreate() throws RibolovException {
         kontrolaIme();
         kontrolaPrezime();
         kontrolaOib();
@@ -30,7 +42,7 @@ public class ObradaRibic extends Obrada<Ribic> {
     }
 
     @Override
-    protected void kontrolaUpdate() throws RibolovException {
+protected void kontrolaUpdate() throws RibolovException {
         kontrolaIme();
         kontrolaPrezime();
         kontrolaOib();
@@ -38,7 +50,7 @@ public class ObradaRibic extends Obrada<Ribic> {
     }
 
     @Override
-    protected void kontrolaDelete() throws RibolovException {
+protected void kontrolaDelete() throws RibolovException {
        if (entitet.getRibiciNaNatjecanju()!= null
                 && !entitet.getRibiciNaNatjecanju().isEmpty()) {
             throw new RibolovException("Ribič ima postignute rezultate "
@@ -60,7 +72,7 @@ public class ObradaRibic extends Obrada<Ribic> {
     }
 
     @Override
-    protected String getNazivEntiteta() {
+protected String getNazivEntiteta() {
         return "Ribic";
     }
 

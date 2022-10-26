@@ -7,6 +7,7 @@ package edunova.view;
 import com.github.lgooddatepicker.components.DatePickerSettings;
 import com.github.lgooddatepicker.components.DateTimePicker;
 import edunova.controller.ObradaNatjecanje;
+import edunova.controller.ObradaRibic;
 import edunova.controller.ObradaRiboloviste;
 import edunova.model.Natjecanje;
 import edunova.model.Riboloviste;
@@ -16,6 +17,7 @@ import edunova.model.Ribic;
 import edunova.util.Pomocno;
 import javax.swing.DefaultComboBoxModel;
 import edunova.util.RibolovException;
+import java.awt.event.KeyEvent;
 import java.sql.Time;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -39,14 +41,18 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
      * Creates new form ProzorNatjecanje
      */
     private ObradaNatjecanje obrada;
+    private ObradaRibic obradaRibic;
+    private Izbornik izbornik;
     private int selectedIndex;
 
     /**
      *
      */
-    public ProzorNatjecanje() {
+    public ProzorNatjecanje(Izbornik izbornik) {
         initComponents();
+        this.izbornik = izbornik;
         obrada = new ObradaNatjecanje();
+        obradaRibic = new ObradaRibic();
         selectedIndex = 0;
         postavke();
         ucitaj();
@@ -65,6 +71,8 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
                 + " Natjecanje");
         ucitajRibolovista();
         prilagodiDatePicker();
+
+        lstRibiciNaNatjecanju.setModel(new DefaultListModel<>());
     }
 
     private void prilagodiDatePicker() {
@@ -92,7 +100,6 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
         cmbRiboloviste.setModel(m);
 
     }
-     
 
     private NatjecanjeRibic kreirajRibiceNaNatjecanjima(Natjecanje n, Ribic rc, String s, String i) {
         NatjecanjeRibic nr = new NatjecanjeRibic();
@@ -102,9 +109,9 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
         nr.setMasa(i);
 
         return nr;
-    
-}
-    
+
+    }
+
     private void dodajRibiceNaNatjecanje() {
 
         if (lstRibiciNaNatjecanju.getSelectedValue() == null) {
@@ -124,16 +131,16 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
         }
 
         DefaultListModel<NatjecanjeRibic> m = (DefaultListModel<NatjecanjeRibic>) lstRibiciNaNatjecanju.getModel();
-        m.addElement(kreirajRibiceNaNatjecanjima(obrada.getEntitet(), lstRibiciUBazi.getSelectedValue(), ""));
+        m.addElement(kreirajRibiceNaNatjecanjima(obrada.getEntitet(), lstRibiciUBazi.getSelectedValue(), "", ""));
         txtUvjet.requestFocus();
         txtUvjet.selectAll();
-        
+
     }
 
     private void popuniView() {
         var s = obrada.getEntitet();
         txtVrstaNatjecanja.setText(s.getVrsta());
-       
+
         cmbRiboloviste.setSelectedItem(s.getRiboloviste());
         Date input = s.getPocetak();
 
@@ -151,14 +158,13 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
                 .atZone(ZoneId.systemDefault()).toLocalTime();
         dtpZavrsetak.setDateTimePermissive(LocalDateTime.of(date2, time2));
 
+        lstRibiciNaNatjecanju.setModel(new RibolovListModel<>(s.getRibiciNaNatjecanju()));
     }
 
     private void popuniModel() {
 
         var s = obrada.getEntitet();
         s.setVrsta(txtVrstaNatjecanja.getText());
-      
-      
 
         if (dtpPocetak.getDatePicker() != null) {
             LocalDateTime ldt = LocalDateTime.of(dtpPocetak.getDatePicker().getDate(),
@@ -177,16 +183,14 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
         }
 
         s.setRiboloviste((Riboloviste) cmbRiboloviste.getSelectedItem());
-        
-        
-        
+
         DefaultListModel<NatjecanjeRibic> m = (DefaultListModel<NatjecanjeRibic>) lstRibiciNaNatjecanju.getModel();
 
         List<NatjecanjeRibic> noviRibiciNaNatjecanju = new ArrayList<>();
         for (int i = 0; i < m.getSize(); i++) {
             noviRibiciNaNatjecanju.add(m.getElementAt(i));
         }
-        //obrada.setnoviRibiciNaNatjecanju(noviRibiciNaNatjecanju);
+        obrada.setNoviRibiciNaNatjecanju(noviRibiciNaNatjecanju);
 
     }
 
@@ -219,7 +223,7 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
         lstRibiciUBazi = new javax.swing.JList<>();
         jLabel7 = new javax.swing.JLabel();
         txtUvjet = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnTraziRibica = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         txtMasa = new javax.swing.JTextField();
 
@@ -270,6 +274,11 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
             }
         });
 
+        lstRibiciNaNatjecanju.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                lstRibiciNaNatjecanjuKeyPressed(evt);
+            }
+        });
         lstRibiciNaNatjecanju.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 lstRibiciNaNatjecanjuValueChanged(evt);
@@ -288,15 +297,41 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
         jLabel6.setText("Ribiči na natjecanju");
 
         btnDodajRibice.setText("<");
+        btnDodajRibice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDodajRibiceActionPerformed(evt);
+            }
+        });
 
         btnObrisiRibice.setText(">");
+        btnObrisiRibice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnObrisiRibiceActionPerformed(evt);
+            }
+        });
 
         lstRibiciUBazi.setToolTipText("");
+        lstRibiciUBazi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lstRibiciUBaziMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(lstRibiciUBazi);
 
         jLabel7.setText("Ribiči u bazi");
 
-        jButton1.setText("Traži");
+        txtUvjet.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtUvjetKeyPressed(evt);
+            }
+        });
+
+        btnTraziRibica.setText("Traži");
+        btnTraziRibica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTraziRibicaActionPerformed(evt);
+            }
+        });
 
         jLabel8.setText("Masa");
 
@@ -334,7 +369,7 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(txtUvjet, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnTraziRibica, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
@@ -401,7 +436,7 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(txtUvjet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jButton1))
+                                            .addComponent(btnTraziRibica))
                                         .addGap(22, 22, 22)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -442,13 +477,16 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
             ucitaj();
         } catch (RibolovException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getPoruka());
+            if (lstEntiteti.getSelectedIndex() >= 0) {
+                obrada.setEntitet(lstEntiteti.getSelectedValue());
+            }
         }
 
 
     }//GEN-LAST:event_btnDodajActionPerformed
 
     private void btnPromjeniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPromjeniActionPerformed
-        if (lstEntiteti.getSelectedValue()==null || obrada.getEntitet() == null) {
+        if (lstEntiteti.getSelectedValue() == null || obrada.getEntitet() == null) {
             JOptionPane.showMessageDialog(rootPane, "Prvo odaberite stavku za promjenu");
             return;
         }
@@ -466,32 +504,36 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPromjeniActionPerformed
 
     private void btnObrisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiActionPerformed
-        if (lstEntiteti.getSelectedValue()==null || obrada.getEntitet() == null) {
+        if (lstEntiteti.getSelectedValue() == null || obrada.getEntitet() == null) {
             JOptionPane.showMessageDialog(rootPane, "Prvo odaberite stavku za promjenu");
             return;
         }
-        
-        if(JOptionPane.showConfirmDialog(rootPane, "Sigurno obrisati edukaciju " + obrada.getEntitet().getVrsta(),
-                                                   "Brisanje edukacije ",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION){
+
+        if (JOptionPane.showConfirmDialog(rootPane, "Sigurno obrisati edukaciju " + obrada.getEntitet().getVrsta(),
+                "Brisanje edukacije ", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION) {
             return;
-       }
+        }
+        popuniModel();
         try {
             obrada.delete();
             selectedIndex = lstEntiteti.getSelectedIndex() - 1;
             if (selectedIndex < 0) {
                 selectedIndex = 0;
             }
-           
+            pocistiView();
             ucitaj();
         } catch (RibolovException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getPoruka());
-        }}
-private void pocistiView() {
+        }
+    }
+
+    private void pocistiView() {
         txtVrstaNatjecanja.setText("");
+        cmbRiboloviste.setModel(null);
         dtpPocetak.setDateTimePermissive(null);
         dtpZavrsetak.setDateTimePermissive(null);
         txtVrstaRibe.setText("");
-
+        txtMasa.setText("");
 
 
     }//GEN-LAST:event_btnObrisiActionPerformed
@@ -508,14 +550,14 @@ private void pocistiView() {
     }//GEN-LAST:event_lstEntitetiValueChanged
 
     private void lstRibiciNaNatjecanjuValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstRibiciNaNatjecanjuValueChanged
-if (evt.getValueIsAdjusting()
+        if (evt.getValueIsAdjusting()
                 || lstRibiciNaNatjecanju.getSelectedValue() == null) {
             return;
         }
 
-    txtVrstaRibe.setText(lstRibiciNaNatjecanju.getSelectedValue().getVrstaRibe());
-    txtMasa.setText(lstRibiciNaNatjecanju.getSelectedValue().getMasa());
-        //taOcijena.setText(lstDjelatniciNaEdukaciji.getSelectedValue().getOcijena());
+        txtVrstaRibe.setText(lstRibiciNaNatjecanju.getSelectedValue().getVrstaRibe());
+        txtMasa.setText(lstRibiciNaNatjecanju.getSelectedValue().getMasa());
+
 
     }//GEN-LAST:event_lstRibiciNaNatjecanjuValueChanged
 
@@ -532,7 +574,7 @@ if (evt.getValueIsAdjusting()
     }//GEN-LAST:event_txtVrstaRibeKeyTyped
 
     private void txtMasaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMasaKeyTyped
-                                            
+
         if (lstRibiciNaNatjecanju.getSelectedValue() == null) {
             return;
         }
@@ -542,8 +584,75 @@ if (evt.getValueIsAdjusting()
 
         lstRibiciNaNatjecanju.getSelectedValue().setMasa(s);
 
-    
+
     }//GEN-LAST:event_txtMasaKeyTyped
+
+    private void lstRibiciNaNatjecanjuKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lstRibiciNaNatjecanjuKeyPressed
+        if (evt.getKeyCode() != KeyEvent.VK_ENTER) {
+            return;
+        }
+
+        dodajRibiceNaNatjecanje();
+
+    }//GEN-LAST:event_lstRibiciNaNatjecanjuKeyPressed
+
+    private void txtUvjetKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUvjetKeyPressed
+        if (evt.getKeyCode() != KeyEvent.VK_ENTER) {
+
+            return;
+        }
+
+        btnTraziRibicaActionPerformed(null);
+    }//GEN-LAST:event_txtUvjetKeyPressed
+
+    private void btnTraziRibicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTraziRibicaActionPerformed
+        List<Ribic> ribici = obradaRibic.read(txtUvjet.getText().trim());
+
+        lstRibiciUBazi.setModel(new RibolovListModel<>(ribici));
+
+        if (ribici.isEmpty()) {
+            txtUvjet.requestFocus();
+            return;
+        }
+
+        try {
+            lstRibiciUBazi.setSelectedIndex(0);
+        } catch (Exception e) {
+
+        }
+        lstRibiciNaNatjecanju.requestFocus();
+    }//GEN-LAST:event_btnTraziRibicaActionPerformed
+
+    private void btnDodajRibiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajRibiceActionPerformed
+ DefaultListModel<NatjecanjeRibic> m = (DefaultListModel<NatjecanjeRibic>) lstRibiciNaNatjecanju.getModel();
+
+        for (Ribic rc : lstRibiciUBazi.getSelectedValuesList()) {
+
+            m.addElement(kreirajRibiceNaNatjecanjima(obrada.getEntitet(), rc, "",""));
+
+        }
+
+        lstRibiciNaNatjecanju.repaint();    }//GEN-LAST:event_btnDodajRibiceActionPerformed
+
+    private void btnObrisiRibiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiRibiceActionPerformed
+       DefaultListModel<NatjecanjeRibic> m = (DefaultListModel<NatjecanjeRibic>) lstRibiciNaNatjecanju.getModel();
+
+        for (NatjecanjeRibic de : lstRibiciNaNatjecanju.getSelectedValuesList()) {
+
+            m.removeElement(de);
+
+        }
+
+        lstRibiciNaNatjecanju.repaint();
+    }//GEN-LAST:event_btnObrisiRibiceActionPerformed
+
+    private void lstRibiciUBaziMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstRibiciUBaziMouseClicked
+        if (evt.getClickCount() != 2) {
+            return;
+        }
+
+        dodajRibiceNaNatjecanje();
+    }//GEN-LAST:event_lstRibiciUBaziMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -553,10 +662,10 @@ if (evt.getValueIsAdjusting()
     private javax.swing.JButton btnObrisi;
     private javax.swing.JButton btnObrisiRibice;
     private javax.swing.JButton btnPromjeni;
+    private javax.swing.JButton btnTraziRibica;
     private javax.swing.JComboBox<Riboloviste> cmbRiboloviste;
     private com.github.lgooddatepicker.components.DateTimePicker dtpPocetak;
     private com.github.lgooddatepicker.components.DateTimePicker dtpZavrsetak;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

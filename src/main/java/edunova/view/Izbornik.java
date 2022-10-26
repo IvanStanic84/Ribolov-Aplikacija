@@ -113,7 +113,8 @@ public class Izbornik extends javax.swing.JFrame {
         new ProzorRibic().setVisible(true);    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        new ProzorNatjecanje().setVisible(true);    }//GEN-LAST:event_jMenuItem5ActionPerformed
+        new ProzorNatjecanje(this).setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

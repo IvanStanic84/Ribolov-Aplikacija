@@ -5,16 +5,42 @@
 package edunova.controller;
 
 import edunova.model.Natjecanje;
+import edunova.model.NatjecanjeRibic;
 import edunova.util.Pomocno;
 import edunova.util.RibolovException;
 import java.util.List;
+import org.hibernate.Session;
 
 /**
  *
  * @author Korisnik
  */
 public class ObradaNatjecanje extends Obrada<Natjecanje> {
+private List<NatjecanjeRibic> noviRibiciNaNatjecanju;
 
+    public List<NatjecanjeRibic> getNoviRibiciNaNatjecanju() {
+        return noviRibiciNaNatjecanju;
+    }
+
+    public void setNoviRibiciNaNatjecanju(List<NatjecanjeRibic> noviRibiciNaNatjecanju) {
+        this.noviRibiciNaNatjecanju = noviRibiciNaNatjecanju;
+    }
+
+    public Natjecanje getEntitet() {
+        return entitet;
+    }
+
+    public void setEntitet(Natjecanje entitet) {
+        this.entitet = entitet;
+    }
+
+    public Session getSession() {
+        return session;
+    }
+
+    public void setSession(Session session) {
+        this.session = session;
+    }
     @Override
     public List<Natjecanje> read() {
         return session.createQuery("from Natjecanje", Natjecanje.class).list();
