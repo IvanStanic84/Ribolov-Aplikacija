@@ -11,15 +11,12 @@ import edunova.controller.ObradaRibic;
 import edunova.controller.ObradaRiboloviste;
 import edunova.model.Natjecanje;
 import edunova.model.Riboloviste;
-import edunova.model.Ribolovnodrustvo;
 import edunova.model.NatjecanjeRibic;
 import edunova.model.Ribic;
 import edunova.util.Pomocno;
 import javax.swing.DefaultComboBoxModel;
 import edunova.util.RibolovException;
 import java.awt.event.KeyEvent;
-import java.sql.Time;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -123,7 +120,7 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
         for (int i = 0; i < ribiciNaNatjecanju.getSize(); i++) {
 
             if (ribiciNaNatjecanju.get(i).getRibic().getSifra().equals(lstRibiciUBazi.getSelectedValue().getSifra())) {
-                JOptionPane.showMessageDialog(rootPane, "Djelatnik je već  dodan na edukaciju");
+                JOptionPane.showMessageDialog(rootPane, "Ribič je već dodan na natjecanje");
                 return;
 
             }
