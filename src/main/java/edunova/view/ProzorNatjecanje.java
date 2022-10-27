@@ -57,9 +57,9 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
 
     private void ucitaj() {
         lstEntiteti.setModel(new RibolovListModel<>(obrada.read()));
-        if (lstEntiteti.getModel().getSize() > 0) {
+        /*if (lstEntiteti.getModel().getSize() > 0) {
             lstEntiteti.setSelectedIndex(selectedIndex);
-        }
+        }*/
 
     }
 
@@ -162,6 +162,7 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
 
         var s = obrada.getEntitet();
         s.setVrsta(txtVrstaNatjecanja.getText());
+       
 
         if (dtpPocetak.getDatePicker() != null) {
             LocalDateTime ldt = LocalDateTime.of(dtpPocetak.getDatePicker().getDate(),
@@ -494,6 +495,7 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
             selectedIndex = lstEntiteti.getModel().getSize();
             ucitaj();
         } catch (RibolovException ex) {
+            obrada.refresh();
             JOptionPane.showMessageDialog(rootPane, ex.getPoruka());
         }
 
@@ -513,12 +515,13 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
         popuniModel();
         try {
             obrada.delete();
+            pocistiView();
+            ucitaj();
             selectedIndex = lstEntiteti.getSelectedIndex() - 1;
             if (selectedIndex < 0) {
                 selectedIndex = 0;
             }
-            pocistiView();
-            ucitaj();
+           
         } catch (RibolovException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getPoruka());
         }
@@ -526,7 +529,7 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
 
     private void pocistiView() {
         txtVrstaNatjecanja.setText("");
-        cmbRiboloviste.setModel(null);
+        cmbRiboloviste.setSelectedItem(null);
         dtpPocetak.setDateTimePermissive(null);
         dtpZavrsetak.setDateTimePermissive(null);
         txtVrstaRibe.setText("");

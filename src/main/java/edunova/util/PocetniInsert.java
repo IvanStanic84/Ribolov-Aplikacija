@@ -45,6 +45,7 @@ public class PocetniInsert {
         kreirajNatjecanja();
         kreirajOperatera();
         sess.getTransaction().commit();
+        HibernateUtil.reset();
     }
 
     private void kreirajRibolovnadrustva() {

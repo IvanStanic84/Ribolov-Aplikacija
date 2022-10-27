@@ -21,6 +21,12 @@ public class ObradaNatjecanje extends Obrada<Natjecanje> {
     private List<NatjecanjeRibic> noviRibiciNaNatjecanju;
 
     @Override
+    public List<Natjecanje> read() {
+        return session.createQuery("from Natjecanje", Natjecanje.class).list();
+
+    }
+
+    @Override
     public void create() throws RibolovException {
 
         kontrolaCreate();
@@ -108,12 +114,6 @@ public class ObradaNatjecanje extends Obrada<Natjecanje> {
     }
 
     @Override
-    public List<Natjecanje> read() {
-        return session.createQuery("from Natjecanje", Natjecanje.class).list();
-
-    }
-
-    @Override
     protected void kontrolaCreate() throws RibolovException {
         kontrolaVrsta();
         kontrolaPocetak();
@@ -130,7 +130,7 @@ public class ObradaNatjecanje extends Obrada<Natjecanje> {
 
     @Override
     protected void kontrolaDelete() throws RibolovException {
-        if (entitet.getRibiciNaNatjecanju() != null
+        /*if (entitet.getRibiciNaNatjecanju() != null
                 && !entitet.getRibiciNaNatjecanju().isEmpty()) {
             throw new RibolovException("Natjecanje ima unešene rezultate "
                     + "i ne može se "

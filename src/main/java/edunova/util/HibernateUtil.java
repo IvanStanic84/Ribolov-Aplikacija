@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package edunova.util;
-
+import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
 
@@ -24,6 +24,7 @@ import org.hibernate.cfg.Configuration;
             if (session == null) {
                 try {
                     session = new Configuration().configure().buildSessionFactory().openSession();
+                    session.setHibernateFlushMode(FlushMode.ALWAYS);
                 } catch (Throwable ex) {
                     // Make sure you log the exception, as it might be swallowed
                     System.err.println("Initial SessionFactory creation failed." + ex);
@@ -32,4 +33,6 @@ import org.hibernate.cfg.Configuration;
             }
             return session;
         }
+         public static void reset(){
+        session = null;}
 }

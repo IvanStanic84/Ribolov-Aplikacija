@@ -38,14 +38,14 @@ public class ObradaRibolovnodrustvo extends Obrada<Ribolovnodrustvo> {
 
     @Override
     protected void kontrolaDelete() throws RibolovException {
-        Integer i = session.createNativeQuery(
+       /* Integer i = session.createNativeQuery(
                 "select count(*) from ribic where ribolovnodrustvo_sifra=:p",
                 Integer.class).setParameter("p", entitet.getSifra()).getSingleResult();
         if (i > 0) {
             throw new RibolovException("Ribolovno društvo ima ribiče "
                     + "i ne može se "
                     + "obrisati dok se ne obrišu svi ribiči u ovom društvu");
-        }
+        }*/
 
     }
 

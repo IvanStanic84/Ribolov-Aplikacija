@@ -7,7 +7,6 @@ package edunova.controller;
 import edunova.model.NatjecanjeRibic;
 import edunova.util.RibolovException;
 import java.util.List;
-import java.util.Objects;
 
 /**
  *
@@ -20,7 +19,7 @@ public class ObradaNatjecanjeRibic extends Obrada<NatjecanjeRibic> {
 
     @Override
     public List<NatjecanjeRibic> read() {
-        return session.createQuery("from Rezultat", NatjecanjeRibic.class).list();
+        return session.createQuery("from NatjecanjeEdukacija", NatjecanjeRibic.class).list();
     }
 
     @Override
