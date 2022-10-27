@@ -13,9 +13,6 @@ public class NatjecanjeRibic extends Entitet {
     private String vrstaRibe;
     private String masa;
 
-   
-    
-
     public NatjecanjeRibic(Natjecanje natjecanje, Ribic ribic, String vrstaRibe, String masa, Integer sifra) {
         super(sifra);
         this.natjecanje = natjecanje;
@@ -31,8 +28,6 @@ public class NatjecanjeRibic extends Entitet {
     public void setMasa(String masa) {
         this.masa = masa;
     }
-
-    
 
     public String getVrstaRibe() {
         return vrstaRibe;

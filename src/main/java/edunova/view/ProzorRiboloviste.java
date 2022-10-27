@@ -200,6 +200,7 @@ public class ProzorRiboloviste extends javax.swing.JFrame {
             selectedIndex = lstEntiteti.getSelectedIndex();
             ucitaj();
         } catch (RibolovException ex) {
+            obrada.refresh();
             JOptionPane.showMessageDialog(rootPane, ex.getPoruka());
         }
      }//GEN-LAST:event_btnPromjeniActionPerformed
