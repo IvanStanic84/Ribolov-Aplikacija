@@ -267,7 +267,7 @@ public class PocetniInsert {
         nr3.setNatjecanje(n);
         nr3.setRibic(ribici.get(2));
         nr3.setMasa("333");
-        nr3.setVrstaRibe("Snuđ");
+        nr3.setVrstaRibe("Smuđ");
 
         sess.persist(nr1);
         sess.persist(nr2);
@@ -306,7 +306,7 @@ public class PocetniInsert {
         nr3.setNatjecanje(n);
         nr3.setRibic(ribici.get(1));
         nr3.setMasa("666");
-        nr3.setVrstaRibe("Snuđ");
+        nr3.setVrstaRibe("Smuđ");
 
         sess.persist(nr1);
         sess.persist(nr2);
@@ -332,20 +332,20 @@ public class PocetniInsert {
         NatjecanjeRibic nr1 = new NatjecanjeRibic();
         nr1.setNatjecanje(n);
         nr1.setRibic(ribici.get(0));
-        nr1.setMasa("111");
+        nr1.setMasa("358");
         nr1.setVrstaRibe("Šaran");
 
         NatjecanjeRibic nr2 = new NatjecanjeRibic();
         nr2.setNatjecanje(n);
         nr2.setRibic(ribici.get(1));
-        nr2.setMasa("22");
+        nr2.setMasa("785");
         nr2.setVrstaRibe("Som");
 
         NatjecanjeRibic nr3 = new NatjecanjeRibic();
         nr3.setNatjecanje(n);
         nr3.setRibic(ribici.get(2));
-        nr3.setMasa("333");
-        nr3.setVrstaRibe("Snuđ");
+        nr3.setMasa("356");
+        nr3.setVrstaRibe("Smuđ");
 
         sess.persist(nr1);
         sess.persist(nr2);
@@ -371,20 +371,20 @@ public class PocetniInsert {
         NatjecanjeRibic nr1 = new NatjecanjeRibic();
         nr1.setNatjecanje(n);
         nr1.setRibic(ribici.get(0));
-        nr1.setMasa("111");
+        nr1.setMasa("456");
         nr1.setVrstaRibe("Šaran");
 
         NatjecanjeRibic nr2 = new NatjecanjeRibic();
         nr2.setNatjecanje(n);
         nr2.setRibic(ribici.get(1));
-        nr2.setMasa("222");
-        nr2.setVrstaRibe("Som");
+        nr2.setMasa("598");
+        nr2.setVrstaRibe("Mrena");
 
         NatjecanjeRibic nr3 = new NatjecanjeRibic();
         nr3.setNatjecanje(n);
         nr3.setRibic(ribici.get(2));
-        nr3.setMasa("333");
-        nr3.setVrstaRibe("Snuđ");
+        nr3.setMasa("378");
+        nr3.setVrstaRibe("Keder");
 
         sess.persist(nr1);
         sess.persist(nr2);
@@ -410,20 +410,20 @@ public class PocetniInsert {
         NatjecanjeRibic nr1 = new NatjecanjeRibic();
         nr1.setNatjecanje(n);
         nr1.setRibic(ribici.get(0));
-        nr1.setMasa("111");
-        nr1.setVrstaRibe("Šaran");
+        nr1.setMasa("165");
+        nr1.setVrstaRibe("Babuška");
 
         NatjecanjeRibic nr2 = new NatjecanjeRibic();
         nr2.setNatjecanje(n);
         nr2.setRibic(ribici.get(1));
-        nr2.setMasa("222");
-        nr2.setVrstaRibe("Som");
+        nr2.setMasa("889");
+        nr2.setVrstaRibe("Pastat");
 
         NatjecanjeRibic nr3 = new NatjecanjeRibic();
         nr3.setNatjecanje(n);
         nr3.setRibic(ribici.get(2));
-        nr3.setMasa("333");
-        nr3.setVrstaRibe("Snuđ");
+        nr3.setMasa("365");
+        nr3.setVrstaRibe("Štuka");
 
         sess.persist(nr1);
         sess.persist(nr2);

@@ -162,7 +162,6 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
 
         var s = obrada.getEntitet();
         s.setVrsta(txtVrstaNatjecanja.getText());
-       
 
         if (dtpPocetak.getDatePicker() != null) {
             LocalDateTime ldt = LocalDateTime.of(dtpPocetak.getDatePicker().getDate(),
@@ -331,7 +330,7 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setText("Masa");
+        jLabel8.setText("Masa (g)");
 
         txtMasa.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -521,7 +520,7 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
             if (selectedIndex < 0) {
                 selectedIndex = 0;
             }
-           
+
         } catch (RibolovException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getPoruka());
         }
@@ -624,18 +623,18 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTraziRibicaActionPerformed
 
     private void btnDodajRibiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajRibiceActionPerformed
- DefaultListModel<NatjecanjeRibic> m = (DefaultListModel<NatjecanjeRibic>) lstRibiciNaNatjecanju.getModel();
+        DefaultListModel<NatjecanjeRibic> m = (DefaultListModel<NatjecanjeRibic>) lstRibiciNaNatjecanju.getModel();
 
         for (Ribic rc : lstRibiciUBazi.getSelectedValuesList()) {
 
-            m.addElement(kreirajRibiceNaNatjecanjima(obrada.getEntitet(), rc, "",""));
+            m.addElement(kreirajRibiceNaNatjecanjima(obrada.getEntitet(), rc, "", ""));
 
         }
 
         lstRibiciNaNatjecanju.repaint();    }//GEN-LAST:event_btnDodajRibiceActionPerformed
 
     private void btnObrisiRibiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiRibiceActionPerformed
-       DefaultListModel<NatjecanjeRibic> m = (DefaultListModel<NatjecanjeRibic>) lstRibiciNaNatjecanju.getModel();
+        DefaultListModel<NatjecanjeRibic> m = (DefaultListModel<NatjecanjeRibic>) lstRibiciNaNatjecanju.getModel();
 
         for (NatjecanjeRibic de : lstRibiciNaNatjecanju.getSelectedValuesList()) {
 
