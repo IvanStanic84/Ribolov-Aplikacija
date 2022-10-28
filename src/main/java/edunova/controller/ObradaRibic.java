@@ -26,7 +26,7 @@ public class ObradaRibic extends Obrada<Ribic> {
         return session.createQuery("from Ribic p where "
                 + " lower(concat(p.ime,' ',p.prezime)) like :uvjet", Ribic.class)
                 .setParameter("uvjet", "%" + uvjet.toLowerCase() + "%")
-                .setMaxResults(5)
+                .setMaxResults(10)
                 .list();
 
     
@@ -53,9 +53,9 @@ protected void kontrolaUpdate() throws RibolovException {
 protected void kontrolaDelete() throws RibolovException {
        if (entitet.getRibiciNaNatjecanju()!= null
                 && !entitet.getRibiciNaNatjecanju().isEmpty()) {
-            throw new RibolovException("Ribič ima postignute rezultate "
+            throw new RibolovException("Ribič je dodan na natjecanje "
                     + "i ne može se "
-                    + "obrisati dok se ne obrišu svi rezultati kojima je ovaj ribič prisustvovao");
+                    + "obrisati dok se ne obrišu sva natjecanja kojima je ovaj ribič prisustvovao");
       /*
         Integer i = session.createNativeQuery(
                 "select count(*) from rezultati where ribic_sifra=:p",

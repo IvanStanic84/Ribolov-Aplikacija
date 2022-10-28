@@ -497,13 +497,10 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
             return;
         }
 
-        if (txtMasa.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(rootPane, "Masa mora biti unešena");
-            return;
-        }
+      
 
-        if (txtMasa.getText().matches("\\p{L}+")) {
-            JOptionPane.showMessageDialog(rootPane, "Masa mora biti broj ili - ako ribič nije prisustvovao natjecanju");
+        if (!txtMasa.getText().matches("[0-9]+")) {
+            JOptionPane.showMessageDialog(rootPane, "Masa mora biti broj");
 
         }
 
