@@ -9,6 +9,7 @@ import com.github.lgooddatepicker.components.DateTimePicker;
 import edunova.controller.ObradaNatjecanje;
 import edunova.controller.ObradaRibic;
 import edunova.controller.ObradaRiboloviste;
+import edunova.model.Entitet;
 import edunova.model.Natjecanje;
 import edunova.model.Riboloviste;
 import edunova.model.NatjecanjeRibic;
@@ -190,8 +191,8 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
         obrada.setNoviRibiciNaNatjecanju(noviRibiciNaNatjecanju);
 
     }
-    
-    private void pocistiMasuIVrstu(){
+
+    private void pocistiMasuIVrstu() {
         txtVrstaRibe.setText("");
         txtMasa.setText("");
     }
@@ -473,6 +474,7 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
     private void btnDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajActionPerformed
         obrada.setEntitet(new Natjecanje());
         popuniModel();
+
         try {
             obrada.create();
             selectedIndex = lstEntiteti.getModel().getSize();
@@ -482,7 +484,7 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
             if (lstEntiteti.getSelectedIndex() >= 0) {
                 obrada.setEntitet(lstEntiteti.getSelectedValue());
             }
-            
+
         }
 
 
@@ -503,7 +505,6 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
             obrada.refresh();
             JOptionPane.showMessageDialog(rootPane, ex.getPoruka());
         }
-       
 
 
     }//GEN-LAST:event_btnPromjeniActionPerformed

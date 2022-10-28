@@ -56,10 +56,10 @@ public class ObradaNatjecanjeRibic extends Obrada<NatjecanjeRibic> {
         }
     }
 
-    private void kontrolaMasaMoraBitiBroj() throws RibolovException{
+    private void kontrolaMasaMoraBitiBroj() throws RibolovException {
 
         if (!entitet.getMasa().matches("[0-9]+")) {
-            throw new RibolovException("Masa mora biti broj");
+            throw new RibolovException("Masa mora biti broj!");
 
         }
     }

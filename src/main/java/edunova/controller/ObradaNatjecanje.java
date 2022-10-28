@@ -121,6 +121,7 @@ public class ObradaNatjecanje extends Obrada<Natjecanje> {
         kontrolaPocetak();
         kontrolaKraj();
         kontrolaVrijemePočetkaMoraBitiPrijeVremenaZavrsetka();
+        
 
     }
 
