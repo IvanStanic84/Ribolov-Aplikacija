@@ -473,16 +473,6 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
 
     private void btnDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajActionPerformed
         obrada.setEntitet(new Natjecanje());
-        
-         if (txtMasa.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(rootPane, "Masa mora biti unešena");
-            return;
-        }
-        
-        if (txtMasa.getText().matches("\\p{L}+")) {
-            JOptionPane.showMessageDialog(rootPane,"Masa mora biti broj!");
-
-        }
 
         popuniModel();
 
@@ -511,9 +501,9 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Masa mora biti unešena");
             return;
         }
-        
+
         if (txtMasa.getText().matches("\\p{L}+")) {
-            JOptionPane.showMessageDialog(rootPane,"Masa mora biti broj!");
+            JOptionPane.showMessageDialog(rootPane, "Masa mora biti broj ili - ako ribič nije prisustvovao natjecanju");
 
         }
 
