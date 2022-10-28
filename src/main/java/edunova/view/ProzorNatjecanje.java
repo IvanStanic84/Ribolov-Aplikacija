@@ -58,9 +58,9 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
 
     private void ucitaj() {
         lstEntiteti.setModel(new RibolovListModel<>(obrada.read()));
-        /*if (lstEntiteti.getModel().getSize() > 0) {
+        if (lstEntiteti.getModel().getSize() > 0) {
             lstEntiteti.setSelectedIndex(selectedIndex);
-        }*/
+        }
 
     }
 
@@ -473,6 +473,17 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
 
     private void btnDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajActionPerformed
         obrada.setEntitet(new Natjecanje());
+        
+         if (txtMasa.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "Masa mora biti unešena");
+            return;
+        }
+        
+        if (txtMasa.getText().matches("\\p{L}+")) {
+            JOptionPane.showMessageDialog(rootPane,"Masa mora biti broj!");
+
+        }
+
         popuniModel();
 
         try {
@@ -496,11 +507,23 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
             return;
         }
 
+        if (txtMasa.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "Masa mora biti unešena");
+            return;
+        }
+        
+        if (txtMasa.getText().matches("\\p{L}+")) {
+            JOptionPane.showMessageDialog(rootPane,"Masa mora biti broj!");
+
+        }
+
         popuniModel();
+
         try {
             obrada.update();
             selectedIndex = lstEntiteti.getModel().getSize();
             ucitaj();
+
         } catch (RibolovException ex) {
             obrada.refresh();
             JOptionPane.showMessageDialog(rootPane, ex.getPoruka());
@@ -628,7 +651,7 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
         } catch (Exception e) {
 
         }
-        lstRibiciNaNatjecanju.requestFocus();
+        lstRibiciUBazi.requestFocus();
     }//GEN-LAST:event_btnTraziRibicaActionPerformed
 
     private void btnDodajRibiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajRibiceActionPerformed
@@ -639,7 +662,7 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
             m.addElement(kreirajRibiceNaNatjecanjima(obrada.getEntitet(), rc, "", ""));
 
         }
-
+        lstRibiciUBazi.requestFocus();
         lstRibiciNaNatjecanju.repaint();    }//GEN-LAST:event_btnDodajRibiceActionPerformed
 
     private void btnObrisiRibiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiRibiceActionPerformed
@@ -650,7 +673,7 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
             m.removeElement(de);
 
         }
-
+        lstRibiciNaNatjecanju.requestFocus();
         lstRibiciNaNatjecanju.repaint();
     }//GEN-LAST:event_btnObrisiRibiceActionPerformed
 

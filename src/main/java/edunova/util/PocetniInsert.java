@@ -224,39 +224,43 @@ public class PocetniInsert {
         sess.persist(rc);
         return rc;
     }
+
     private Ribic ribic6() {
         Ribic rc = new Ribic();
         rc.setIme("Leon");
         rc.setPrezime("Stanić");
         rc.setRibolovnodrustvo(ribolovnadrustva.get(0));
-        rc.setOib("57779649026");
+        rc.setOib("03943970187");
         sess.persist(rc);
         return rc;
     }
+
     private Ribic ribic7() {
         Ribic rc = new Ribic();
         rc.setIme("Marija");
         rc.setPrezime("Perić");
         rc.setRibolovnodrustvo(ribolovnadrustva.get(1));
-        rc.setOib("57779649026");
+        rc.setOib("68697669463");
         sess.persist(rc);
         return rc;
     }
+
     private Ribic ribic8() {
         Ribic rc = new Ribic();
         rc.setIme("Ana");
         rc.setPrezime("Dorić");
         rc.setRibolovnodrustvo(ribolovnadrustva.get(2));
-        rc.setOib("57779649026");
+        rc.setOib("77557772631");
         sess.persist(rc);
         return rc;
     }
+
     private Ribic ribic9() {
         Ribic rc = new Ribic();
         rc.setIme("Pavle");
         rc.setPrezime("Bibić");
         rc.setRibolovnodrustvo(ribolovnadrustva.get(3));
-        rc.setOib("57779649026");
+        rc.setOib("05653905899");
         sess.persist(rc);
         return rc;
     }
