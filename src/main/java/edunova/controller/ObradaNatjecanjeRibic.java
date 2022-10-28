@@ -25,11 +25,13 @@ public class ObradaNatjecanjeRibic extends Obrada<NatjecanjeRibic> {
     @Override
     protected void kontrolaCreate() throws RibolovException {
         kontrolaMasa();
+        kontrolaMasaMoraBitiBroj();
     }
 
     @Override
     protected void kontrolaUpdate() throws RibolovException {
         kontrolaMasa();
+        kontrolaMasaMoraBitiBroj();
     }
 
     @Override
@@ -44,12 +46,21 @@ public class ObradaNatjecanjeRibic extends Obrada<NatjecanjeRibic> {
 
     private void kontrolaMasa() throws RibolovException {
         kontrolaMasaUnesena();
+        kontrolaMasaMoraBitiBroj();
 
     }
 
     private void kontrolaMasaUnesena() throws RibolovException {
         if (entitet.getMasa() == null) {
             throw new RibolovException("Masa mora biti unešena!");
+        }
+    }
+
+    private void kontrolaMasaMoraBitiBroj() throws RibolovException{
+
+        if (!entitet.getMasa().matches("[0-9]+")) {
+            throw new RibolovException("Masa mora biti broj");
+
         }
     }
 

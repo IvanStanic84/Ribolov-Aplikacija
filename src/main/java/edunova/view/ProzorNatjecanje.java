@@ -190,6 +190,11 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
         obrada.setNoviRibiciNaNatjecanju(noviRibiciNaNatjecanju);
 
     }
+    
+    private void pocistiMasuIVrstu(){
+        txtVrstaRibe.setText("");
+        txtMasa.setText("");
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -477,6 +482,7 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
             if (lstEntiteti.getSelectedIndex() >= 0) {
                 obrada.setEntitet(lstEntiteti.getSelectedValue());
             }
+            
         }
 
 
@@ -497,6 +503,7 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
             obrada.refresh();
             JOptionPane.showMessageDialog(rootPane, ex.getPoruka());
         }
+       
 
 
     }//GEN-LAST:event_btnPromjeniActionPerformed
@@ -507,8 +514,8 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
             return;
         }
 
-        if (JOptionPane.showConfirmDialog(rootPane, "Sigurno obrisati edukaciju " + obrada.getEntitet().getVrsta(),
-                "Brisanje edukacije ", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION) {
+        if (JOptionPane.showConfirmDialog(rootPane, "Sigurno obrisati natjecanje? " + obrada.getEntitet().getVrsta(),
+                "Brisanje natjecanja ", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION) {
             return;
         }
         popuniModel();
@@ -544,6 +551,7 @@ public class ProzorNatjecanje extends javax.swing.JFrame {
         }
         obrada.setEntitet(lstEntiteti.getSelectedValue());
         popuniView();
+        pocistiMasuIVrstu();
 
 
     }//GEN-LAST:event_lstEntitetiValueChanged

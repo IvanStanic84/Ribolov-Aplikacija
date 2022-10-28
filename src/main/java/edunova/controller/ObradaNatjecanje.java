@@ -9,6 +9,8 @@ import edunova.model.NatjecanjeRibic;
 import edunova.util.Pomocno;
 import edunova.util.RibolovException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import org.hibernate.Session;
 
@@ -118,6 +120,7 @@ public class ObradaNatjecanje extends Obrada<Natjecanje> {
         kontrolaVrsta();
         kontrolaPocetak();
         kontrolaKraj();
+        kontrolaVrijemePočetkaMoraBitiPrijeVremenaZavrsetka();
 
     }
 
@@ -126,25 +129,12 @@ public class ObradaNatjecanje extends Obrada<Natjecanje> {
         kontrolaVrsta();
         kontrolaPocetak();
         kontrolaKraj();
+        kontrolaVrijemePočetkaMoraBitiPrijeVremenaZavrsetka();
     }
 
     @Override
     protected void kontrolaDelete() throws RibolovException {
-        /*if (entitet.getRibiciNaNatjecanju() != null
-                && !entitet.getRibiciNaNatjecanju().isEmpty()) {
-            throw new RibolovException("Natjecanje ima unešene rezultate "
-                    + "i ne može se "
-                    + "obrisati dok se ne obrišu svi rezultati koji sadže ovo natjecanje");
-        }
-        /*Integer i = session.createNativeQuery(
-                "select count(*) from rezultati where natjecanje_sifra=:p",
-                Integer.class).setParameter("p", entitet.getSifra()).getSingleResult();
-        if (i > 0) {
-            throw new RibolovException("Natjecanje ima unešene rezultate "
-                    + "i ne može se "
-                    + "obrisati dok se ne obrišu svi rezultati koji sadže ovo natjecanje");
-        }
-         */
+
     }
 
     @Override
@@ -173,4 +163,17 @@ public class ObradaNatjecanje extends Obrada<Natjecanje> {
                     + Pomocno.getPrimjerDatuma());
         }
     }
+
+    private void kontrolaVrijemePočetkaMoraBitiPrijeVremenaZavrsetka() throws RibolovException {
+
+        GregorianCalendar kr = (GregorianCalendar) Calendar.getInstance();
+        kr.setTime(entitet.getKraj());
+
+        if (!entitet.getPocetak().before(kr.getTime())) {
+            throw new RibolovException("Datum i vrijeme početka ne može biti poslije datuma i vremena završetka"
+            );
+        }
+
+    }
+
 }

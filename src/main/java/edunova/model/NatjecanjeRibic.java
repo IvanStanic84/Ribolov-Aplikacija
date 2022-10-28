@@ -59,7 +59,7 @@ public class NatjecanjeRibic extends Entitet {
 
     @Override
     public String toString() {
-        return ribic.getIme() + ribic.getPrezime();
+        return ribic.getIme() + " " + ribic.getPrezime();
     }
 
 }
