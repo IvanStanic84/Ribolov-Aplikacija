@@ -145,7 +145,7 @@ public class ObradaNatjecanje extends Obrada<Natjecanje> {
 
     private void kontrolaVrsta() throws RibolovException {
         if (entitet.getVrsta() == null || entitet.getVrsta().trim().isEmpty()) {
-            throw new RibolovException("Vrsta ribolovnog natjecanja mora biti unešeno");
+            throw new RibolovException("Vrsta ribolovnog natjecanja mora biti unesena");
         }
     }
 
