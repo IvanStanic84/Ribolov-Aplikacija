@@ -59,7 +59,12 @@ public class NatjecanjeRibic extends Entitet {
 
     @Override
     public String toString() {
-        return ribic.getIme() + " " + ribic.getPrezime();
+        var vr = vrstaRibe==null ? "": vrstaRibe + "          ";
+        var ma = masa==null ? "": "     " + masa ;
+        var i = ribic.getIme() + "          ";
+        var p = ribic.getPrezime() + "          ";
+        
+        return i.substring(0,10) + " " + p.substring(0,10)+ " " + vr.substring(0,10) + " " + ma.substring(ma.length()-5);
     }
 
 }
