@@ -37,7 +37,7 @@ protected void kontrolaCreate() throws RibolovException {
         kontrolaIme();
         kontrolaPrezime();
         kontrolaOib();
-        kontrolaRibolovnodrustvo();
+        
 
     }
 
@@ -46,7 +46,6 @@ protected void kontrolaUpdate() throws RibolovException {
         kontrolaIme();
         kontrolaPrezime();
         kontrolaOib();
-        kontrolaRibolovnodrustvo();
     }
 
     @Override
@@ -103,7 +102,5 @@ protected String getNazivEntiteta() {
 
     }
 
-    private void kontrolaRibolovnodrustvo() {
-
-    }
+ 
 }

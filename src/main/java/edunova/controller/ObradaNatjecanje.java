@@ -174,6 +174,8 @@ public class ObradaNatjecanje extends Obrada<Natjecanje> {
             throw new RibolovException("Datum i vrijeme početka ne može biti poslije datuma i vremena završetka"
             );
         }
+        
+    
 
     }
 
